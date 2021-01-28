@@ -1,0 +1,17 @@
+ 
+The aim of the project is to study the properties of quantum particles in an external field reproducing a fractal structure. A possible realization is an ultracold quantum gas confined to two dimensions with a superimposed external field, which will create the fractal geometry. As a model for the fractal, we will consider Sierpi¿ski carpet. The main properties of interest in the ground state energy and the density profile. Such properties are to be calculated as a function of the recursion number and a possible existence of a simple scaling law has to be verified.
+
+
+This interdisciplinary problem is based on application of mathematical concepts to the field of quantum physics and relies on use of numerical methods. This project requires carrying out a scientific investigation and a priori it is not clear which method will work the best. In particular, possible  approaches to address the problem are
+1) to solve Schrödinger equation in imaginary time for one particle
+2) to solve Gross-Pitaevskii equation to solve Schroedinger equation in imaginary time for many bosons
+3) do exact diagonalization of a discretized Hamiltonian for one particle and few fermions
+4) random walks solution for the diffusion equation (i.e. Schroedinger equation in imaginary time) for one particle
+
+Bibliography
+
+[1] https://en.wikipedia.org/wiki/Sierpi%C5%84ski_carpet
+[2] https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation
+[3] https://en.wikipedia.org/wiki/Gross%E2%80%93Pitaevskii_equation
+[4] Simulating the 1D GPE http://link.springer.com/content/pdf/bbm%3A978-3-319-42476-7%2F1.pdf
+[5] Solving Hydrogen atom numerically with 14 lines of Matlab code https://timqian.com/2015/03/04/H-atom-numerical/
