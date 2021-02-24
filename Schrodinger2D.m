@@ -1,8 +1,9 @@
 %Schrodinger2D.m
+display('Starting program');
 Neig = 1; % number of eigenvalues to be found
-N = 3^5;
+N = 3^6;
 Rmax = 0.5;
-recursion_level = 5;
+recursion_level = 6;
 
 dx = (Rmax*2)/N;  
 x = linspace(-Rmax + dx/2, Rmax - dx/2, N);   % one-dimensional space lattice
@@ -32,7 +33,7 @@ L2 = kron(L, I) + kron(I, L);
 
 % --------- Sierpinski Carpet ---------
 %%{
-Vext_mat = sierpinski(N, recursion_level, false);
+Vext_mat = sierpinski(N, recursion_level, true);
 %imshow(Vext_mat);
 %pause;
 Vext = Vext_mat(:);

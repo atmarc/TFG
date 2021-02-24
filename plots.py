@@ -8,7 +8,7 @@ from collections import defaultdict
 def n_vs_energy():
     def add_file(filename, data_label, pattern='-'):
         data = []
-        with open(filename,'r') as f:
+        with open('data/' + filename,'r') as f:
             for line in f.readlines():
                 n, pot, rec, e1, e2 = line[:-1].split()
                 if int(n) > 117: data.append((int(n), int(pot), int(rec), float(e1), float(e2)))
@@ -69,7 +69,7 @@ def rec_vs_energy():
     E1 = []
     E2 = []
     data = []
-    with open('data6.txt','r') as f:
+    with open('data/data6.txt','r') as f:
         for line in f.readlines():
             rec, pot, n, e1, e2 = line[:-1].split()
             data.append((int(pot), int(rec), int(n), float(e1), float(e2)))
@@ -108,7 +108,7 @@ def pot_vs_energy():
     X = []
     E1 = []
     E2 = []
-    with open('data5.txt','r') as f:
+    with open('data/data5.txt','r') as f:
         for line in f.readlines():
             pot, n, e1, e2 = line[:-1].split()
             if int(pot) > 10:
