@@ -1,24 +1,14 @@
-n = 4;
-M = zeros(n,n);
-I = speye(n);
-for i=1:n
-  for j=1:n
-    M(i,j) = (j*10) + i;
-  endfor
-endfor
+N = 10000;
 
-display(M);
-K1 = kron(I, M);
-K2 = kron(M, I);
-display(full(K1));
-display('-----------------------------');
-display(full(K2));
+% Random symetric matrix
+d = 1000000*rand(N,1);
+t = triu(bsxfun(@min,d,d.').*rand(N),1); 
+M = diag(d)+t+t.';
 
-F = zeros(n^2,n^2);
-for i=1:(n*n)
-  for j=1:(n*n)
-    F(i,j) = K1(i,j)*100 + K2(i,j);
-  endfor
-endfor
-display('-----------------------------');
-display(F);
+tic
+[PSI,E] = eigs(M, 2, 'sa');
+toc
+tic
+[PSI2,E2,ErrorFlag] = lobpcg(rand(N, 2), M, 1e-4, 10000);
+toc
+display([num2str(E(1,1)) ' ' num2str(E2(1,1))])

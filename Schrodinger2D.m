@@ -17,8 +17,8 @@ e = ones(N,1);
 L = spdiags([e -2*e e], -1:1, N, N);
 
 % Periodic boundary conditions 
-L(N,1) = 1;
-L(1, N) = 1;
+%L(N,1) = 1;
+%L(1, N) = 1;
 
 L = L / h^2; % 1D finite difference Laplacian
 
@@ -48,8 +48,13 @@ display('Finding eigenvalues...');
 
 opt.p = 100;
 %sigma = 'si'; 
-sigma = 'sa'; 
-[PSI,E] = eigs(H, Neig, sigma, opt);      % Smallest eigenvalue of H
+sigma = 'sa';
+
+%[PSI,E] = eigs(H, Neig, sigma, opt);      % Smallest eigenvalue of H
+tic
+[PSI,E,ErrorFlag] = lobpcg(rand(N^2, 1), H,1, 10000);
+toc
+display(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
 
 for i=1:length(diag(E))
   disp(['Eigenstate ' num2str(i-1) ' energy ' num2str(E(i,i), 5) '\hbar\omega']); %display result
