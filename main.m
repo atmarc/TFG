@@ -1,7 +1,7 @@
 function r = main()
   pot = 1000000
   for N=1:7
-    for rec=[3]
+    for rec=1:9
       data = schrodinger_p(N*(3^rec), rec, pot, false);
       display(data);
       save_to_file('data_zbc_pot_1000000.txt', data);
