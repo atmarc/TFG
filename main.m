@@ -1,10 +1,10 @@
 function r = main()
-  pot = 1000000
-  for N=1:7
+  pot = 1000000;
+  for N=4:7
     for rec=1:9
       data = schrodinger_p(N*(3^rec), rec, pot, false);
-      display(data);
-      save_to_file('data_zbc_pot_1000000.txt', data);
+      display([data ' ']);
+      %save_to_file('data_zbc_pot_1000000.txt', data);
     end
   end
 end
@@ -16,7 +16,7 @@ function r = save_to_file(filename, data)
 end
 
 function r = schrodinger_p(N, rec_lvl, potencial, pbc)
-  Neig = 2; % number of eigenvalues to be found
+  Neig = 1; % number of eigenvalues to be found
   Rmax = 0.5;
 
   dx = (Rmax*2)/N;  
@@ -45,16 +45,23 @@ function r = schrodinger_p(N, rec_lvl, potencial, pbc)
   Hext = spdiags(Vext, 0, N^2, N^2);
   H = Hkin + Hext;  % Hamiltonian
   
-  display('Looking for eigenvalues...');
-  % sigma = 'sa';
-  % opt.p = 200;
-  % [PSI,E] = eigs(H, Neig, sigma, opt);      % Smallest eigenvalue of H
-  
   precision = 1e-3;
   max_iter = 10000;
+  tic
   [PSI2,E2,ErrorFlag] = lobpcg(randn(N^2, 2), H, precision, max_iter);
+  toc
+  display(num2str(E2(1,1)));
+  
+  
+  sigma = 'sa';
+  opt.p = 100;
+  tic
+  [PSI,E] = eigs(H, Neig, sigma, opt);      % Smallest eigenvalue of H
+  toc
+  display(num2str(E(1,1)));
   
   enregy0 = num2str(E(1,1), 5);
-  enregy1 = num2str(E(2,1), 5);
-  r = [num2str(N) ' ' num2str(potencial) ' ' num2str(rec_lvl) ' ' enregy0 ' ' enregy1 ' ' num2str(ErrorFlag)];
+  r = 0;
+  %enregy1 = num2str(E(2,1), 5);
+  %r = [num2str(N) ' ' num2str(potencial) ' ' num2str(rec_lvl) ' ' enregy0 ' ' enregy1 ' ' num2str(ErrorFlag)];
 end
