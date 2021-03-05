@@ -1,9 +1,9 @@
 %Schrodinger2D.m
 display('Starting program');
 Neig = 1; % number of eigenvalues to be found
-N = 3^6;
+N = 3^5;
 Rmax = 0.5;
-recursion_level = 6;
+recursion_level = 5;
 
 dx = (Rmax*2)/N;  
 x = linspace(-Rmax + dx/2, Rmax - dx/2, N);   % one-dimensional space lattice

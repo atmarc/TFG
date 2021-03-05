@@ -4,8 +4,6 @@ iterations = 10000;
 n_walkers = 10000;
  
 dt = L/N;
-Rmax = L/2;
-
 props.N = N; props.L = L; props.dt = dt; props.Rmax = Rmax;
 
 grid = zeros(N,N);
@@ -56,7 +54,6 @@ end
 function res = update_walker(walker, props)
     dt = props.dt; N = props.N; L = props.L; Rmax = props.Rmax;
     
-    % Update movement
     [a, b] = random_values();
     walker.x = walker.x + a * dt;
     walker.x_pbc = walker.x_pbc + a * dt;
@@ -66,7 +63,7 @@ function res = update_walker(walker, props)
     walker.g_posx = round((walker.x + Rmax) * N/L) + 1;
     walker.g_posy = round((walker.y + Rmax) * N/L) + 1;
     
-    % check if it is in a valid position
+    % not valid position
     if walker.g_posx <= 0 
         walker.x = walker.x + L;
         walker.g_posx = walker.g_posx + N; 

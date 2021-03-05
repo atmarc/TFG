@@ -1,13 +1,11 @@
 function r = main()
     pot = 1000000;
+
     for rec=1:9
-        for i=1:5
-            N = i * (3^rec);
-            if N < 20000
-                data = schrodinger_p(N, rec, pot, false);
-                disp(data);
-                save_to_file([num2str(rec) '_data.txt'], data);
-            end
+        for N=1:(10 - rec)
+            data = schrodinger_p(N*(3^rec), rec, pot, false);
+            display([data ' ']);
+            save_to_file('data.txt', data);
         end
     end
 end
@@ -57,10 +55,7 @@ function r = schrodinger_p(N, rec_lvl, potencial, pbc)
   toc
 
   % Store image if it is a big calculus
-  if rec_lvl > 5
-    filename = [num2str(N) '_' num2str(rec_lvl) 'mat.png'];
-    imwrite(reshape(PSI, [N,N]), filename);
-  end
+  if rec_lvl > 6
   
   enregy0 = num2str(E, 5);
   r = [num2str(N) ' ' num2str(rec_lvl) ' ' enregy0 ' ' num2str(ErrorFlag)];
