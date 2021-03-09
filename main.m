@@ -1,6 +1,6 @@
 function r = main()
     pot = 1000000;
-    for rec=1:9
+    for rec=4:9
         for i=1:5
             N = i * (3^rec);
             if N < 20000
