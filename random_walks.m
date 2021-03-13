@@ -1,9 +1,11 @@
+
+
 L = 1;
-N = 300;
-iterations = 10000;
-n_walkers = 10000;
+N = 30;
+iterations = 1000;
+n_walkers = 100;
  
-dt = L/N;
+dt = 0.5; % L/3^i
 Rmax = L/2;
 
 props.N = N; props.L = L; props.dt = dt; props.Rmax = Rmax;
@@ -24,20 +26,20 @@ for i=1:n_walkers
         w = walkers(i);
         
         %display([num2str(w.g_posx) ' ' num2str(w.g_posy)]);
-        grid(w.g_posx, w.g_posy) = grid(w.g_posx, w.g_posy) + 1;
+        %grid(w.g_posx, w.g_posy) = grid(w.g_posx, w.g_posy) + 1;
+        
         data(j) = data(j) + w.x_pbc^2 + w.y_pbc^2;
     end
 end
 
-imagesc(grid);
+%imagesc(grid);
 
 % mean value
 data = data / n_walkers;
+x = 1:iterations;
+x = x * dt;
 
-%plot(data);
-%plot(x,data(1,:),x,data(2,:),x,data(3,:),x,data(4,:),x,data(5,:));
-
-
+plot(x, data, x, 2*x);
 
 
 function res = init_walkers(n_walkers)
@@ -58,14 +60,16 @@ function res = update_walker(walker, props)
     
     % Update movement
     [a, b] = random_values();
-    walker.x = walker.x + a * dt;
-    walker.x_pbc = walker.x_pbc + a * dt;
-    walker.y = walker.y + b * dt;
-    walker.y_pbc = walker.y_pbc + a * dt;
+    walker.x = walker.x + a * sqrt(dt);
+    walker.x_pbc = walker.x_pbc + a * sqrt(dt);
+    
+    walker.y = walker.y + b * sqrt(dt);
+    walker.y_pbc = walker.y_pbc + b * sqrt(dt);
     
     walker.g_posx = round((walker.x + Rmax) * N/L) + 1;
     walker.g_posy = round((walker.y + Rmax) * N/L) + 1;
     
+    %{
     % check if it is in a valid position
     if walker.g_posx <= 0 
         walker.x = walker.x + L;
@@ -83,6 +87,7 @@ function res = update_walker(walker, props)
         walker.y = walker.y - L;
         walker.g_posy = walker.g_posy - N; 
     end
+    %}
     res = walker;
 end
 
