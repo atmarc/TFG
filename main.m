@@ -1,12 +1,12 @@
 function r = main()
     pot = 1000000;
-    for rec=1:9
+    for rec=5:9
         for i=1:5
             N = i * (3^rec);
             if N < 20000
                 data = schrodinger_p(N, rec, pot, false);
                 disp(data);
-                save_to_file([num2str(rec) '_data.txt'], data);
+                save_to_file([num2str(rec) '_data2.txt'], data);
             end
         end
     end
@@ -19,6 +19,7 @@ function r = save_to_file(filename, data)
 end
 
 function r = schrodinger_p(N, rec_lvl, potencial, pbc)
+  disp(['Computing: ' num2str(N) ' ' num2str(rec_lvl)]);
   Neig = 1; % number of eigenvalues to be found
   Rmax = 0.5;
 
@@ -62,7 +63,7 @@ function r = schrodinger_p(N, rec_lvl, potencial, pbc)
     imwrite(reshape(PSI, [N,N]), filename);
   end
   
-  enregy0 = num2str(E, 5);
+  enregy0 = num2str(E);
   r = [num2str(N) ' ' num2str(rec_lvl) ' ' enregy0 ' ' num2str(ErrorFlag)];
   
 end

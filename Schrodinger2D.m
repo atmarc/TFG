@@ -63,14 +63,14 @@ for i=1:length(diag(E))
   PSI_2 = reshape(PSI(:, i), [N,N]); 
   PSI_2 = PSI_2 / sign(sum(sum(PSI_2)));
   PSI_2 = PSI_2 / dx;
-  h = pcolor(x,x,PSI_2);
+  %h = pcolor(x,x,PSI_2);
   %sum(sum((((Vext_mat > 0).*PSI_2).^2)))*dx*dx
   %sum(sum((((Vext_mat > -1).*PSI_2).^2)))*dx*dx
   
-  daspect([1 1 1]);
-  colorbar; 
-  set(h, 'EdgeColor', 'none');
-  pause;
+  %daspect([1 1 1]);
+  %colorbar; 
+  %set(h, 'EdgeColor', 'none');
+  %pause;
 end
 
 %List of Matlab functions used in the code.
