@@ -39,3 +39,9 @@ Computing: 3645 6
 Elapsed time is 41542.379291 seconds.
 3645 6 106384.41 1
 Computing: 2187 7
+Elapsed time is 11477.799956 seconds.
+2187 7 201423.97 0
+Computing: 4374 7
+Elapsed time is 53760.797643 seconds.
+4374 7 207253.2867 1
+Computing: 6561 7
