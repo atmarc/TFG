@@ -9,6 +9,6 @@ To get started, type doc.
 For product information, visit www.mathworks.com.
  
 Computing: 4374 7
-Elapsed time is 63947.619690 seconds.
-4374 7 207253.2639 0
+Elapsed time is 51853.285897 seconds.
+4374 7 207253.2735 1
 Computing: 6561 7

@@ -1,9 +1,9 @@
 function r = main()
     pot = 1000000;
-    for rec=5:9
-        for i=1:5
+    for rec=7:9
+        for i=2:5
             N = i * (3^rec);
-            if N < 20000
+            if N < 10000
                 data = schrodinger_p(N, rec, pot, false);
                 disp(data);
                 save_to_file([num2str(rec) '_data2.txt'], data);
@@ -51,8 +51,8 @@ function r = schrodinger_p(N, rec_lvl, potencial, pbc)
   H = Hkin + Hext; 
   
   % Finding eigenvalues
-  precision = 1e-2;
-  max_iter = 10000;
+  precision = 1;
+  max_iter = 100000;
   tic
   [PSI,E,ErrorFlag] = lobpcg(randn(N^2, Neig), H, precision, max_iter);
   toc
