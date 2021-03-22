@@ -1,13 +1,11 @@
 function r = main()
     pot = 1000000;
-    for rec=7:9
-        for i=2:5
-            N = i * (3^rec);
-            if N < 10000
-                data = schrodinger_p(N, rec, pot, false);
-                disp(data);
-                save_to_file([num2str(rec) '_data2.txt'], data);
-            end
+    for rec=9
+        for i=1:3
+            N = i * (3^9);
+            data = schrodinger_p(N, rec, pot, false);
+            disp(data);
+            save_to_file([num2str(rec) '_data2.txt'], data);
         end
     end
 end
