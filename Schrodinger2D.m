@@ -1,9 +1,9 @@
 %Schrodinger2D.m
 display('Starting program');
-Neig = 1; % number of eigenvalues to be found
-N = 3^5;
+N = 3^4;
+Neig = N; % number of eigenvalues to be found
 Rmax = 0.5;
-recursion_level = 5;
+recursion_level = 2;
 
 dx = (Rmax*2)/N;  
 x = linspace(-Rmax + dx/2, Rmax - dx/2, N);   % one-dimensional space lattice
@@ -51,22 +51,26 @@ opt.p = 100;
 sigma = 'sa';
 
 %[PSI,E] = eigs(H, Neig, sigma, opt);      % Smallest eigenvalue of H
+precision = 1e-5;
 tic
-[PSI,E,ErrorFlag] = lobpcg(rand(N^2, 1), H,1, 10000);
+[PSI,E,ErrorFlag] = lobpcg(rand(N^2, Neig), H, precision, 10000);
 toc
 display(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
 
-for i=1:length(diag(E))
-  disp(['Eigenstate ' num2str(i-1) ' energy ' num2str(E(i,i), 5) '\hbar\omega']); %display result
-  comp_value = 1/(1/3^recursion_level)^2;
-  %display([num2str(comp_value, 5) ' ' num2str(E(i,i),5)]);
-  PSI_2 = reshape(PSI(:, i), [N,N]); 
+for i=1:length(diag(E))  
+  %disp(['Eigenstate ' num2str(i-1) ' energy ' num2str(E(i), 5) '\hbar\omega']); %display result
+  PSI_i = PSI(:, i);
+  PSI_2 = reshape(PSI_i, [N,N]); 
   PSI_2 = PSI_2 / sign(sum(sum(PSI_2)));
   PSI_2 = PSI_2 / dx;
-  %h = pcolor(x,x,PSI_2);
-  %sum(sum((((Vext_mat > 0).*PSI_2).^2)))*dx*dx
-  %sum(sum((((Vext_mat > -1).*PSI_2).^2)))*dx*dx
   
+  %disp(sum(sum(PSI_2.^2))*dx^2);
+  
+  IPR = sum(sum(sum(PSI_2.^4))*dx^2);
+  %disp(['IPR: ' num2str(IPR)]);
+  data_to_save = [num2str(i-1) ' ' num2str(E(i), 5) ' ' num2str(IPR)];
+  save_to_file('IPR_data_rec5', data_to_save);
+  %h = pcolor(x,x,PSI_2);
   %daspect([1 1 1]);
   %colorbar; 
   %set(h, 'EdgeColor', 'none');

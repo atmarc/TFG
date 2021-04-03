@@ -10,11 +10,7 @@ function r = main()
     end
 end
 
-function r = save_to_file(filename, data)
-  fileID = fopen(filename,'a');
-  fprintf(fileID, [data '\n']);
-  fclose(fileID);
-end
+
 
 function r = schrodinger_p(N, rec_lvl, potencial, pbc)
   disp(['Computing: ' num2str(N) ' ' num2str(rec_lvl)]);

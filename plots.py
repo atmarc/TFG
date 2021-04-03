@@ -109,6 +109,48 @@ def execution_time():
     plt.show()
 
 
+def IPR_states():
+    def read_data(filename):
+        data = []
+        with open(filename, 'r') as f:
+            for line in f.readlines():
+                state, energy, IPR = line[:-1].split()
+                data.append((int(state), float(energy), float(IPR)))
+        return data
+
+    data_rec2 = read_data('IPR_data_rec2')
+    data_rec3 = read_data('IPR_data_rec3')
+    data_rec4 = read_data('IPR_data_rec4')
+
+    X_r2 = [x for (x, _, _) in data_rec2]
+    Y_r2 = [y for (_, y, _) in data_rec2]
+    Z_r2 = [z for (_, _, z) in data_rec2]
+
+    X_r3 = [x for (x, _, _) in data_rec3]
+    Y_r3 = [y for (_, y, _) in data_rec3]
+    Z_r3 = [z for (_, _, z) in data_rec3]
+   
+    X_r4 = [x for (x, _, _) in data_rec4]
+    Y_r4 = [y for (_, y, _) in data_rec4]
+    Z_r4 = [z for (_, _, z) in data_rec4]
+   
+    # Y_norm = list(map(lambda x: (x - min(Y))/(max(Y) - min(Y)), Y))
+    # Z_norm = list(map(lambda x: (x - min(Z))/(max(Z) - min(Z)), Z))
+   
+    plt.plot(X_r2, Z_r2, '--', label='rec 2')
+
+    plt.plot(X_r3, Z_r3, '--', label='rec 3')
+    # plt.plot(X_r3, Z_r3, '.')
+    plt.plot(X_r4, Z_r4, '--', label='rec 4')
+    # plt.plot(X_r4, Z_r4, '.')
+    
+    # plt.plot(X, Z, 'x')
+    plt.legend()
+    plt.show()
+
+
+
 if __name__ == "__main__":
     # execution_time()
+    # IPR_states()
     rec_vs_energy()
