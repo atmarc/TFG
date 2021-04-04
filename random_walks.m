@@ -57,7 +57,7 @@ for i_rec=1:9
     disp('Ajuste:');
     disp(['y = x*' num2str(p(1)) ' + ' num2str(p(2))]);
 
-    plot(x, distances, x, 2*x, x, y_pred);
+    %plot(x, distances, x, 2*x, x, y_pred);
     save_to_file('random_walks_data.txt', [num2str(i_rec) ' ' num2str(p(1)) ' ' num2str(p(2))]);
 end
 
