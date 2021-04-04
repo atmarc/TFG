@@ -1,8 +1,8 @@
 function r = main()
     pot = 1000000;
-    for rec=9
-        for i=1:3
-            N = i * (3^9);
+    for rec=6
+        for i=5:6
+            N = i * (3^6);
             data = schrodinger_p(N, rec, pot, false);
             disp(data);
             save_to_file([num2str(rec) '_data2.txt'], data);
