@@ -1,7 +1,7 @@
 global L; global dt; global Rmax; global N; global grid;
 
-iterations = 5000;
-n_walkers = 1000;
+iterations = 10000;
+n_walkers = 2000;
 rec_lvl = 1;
 L = 1;
 Rmax = L/2;
