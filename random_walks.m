@@ -1,21 +1,26 @@
 global L; global dt; global Rmax; global N; global grid;
 
-iterations = 10000;
-n_walkers = 300;
+iterations = 5000;
+n_walkers = 1000;
 rec_lvl = 1;
 L = 1;
-N = 3^5;
-dt = (L/(3^rec_lvl))^2/10; % L/3^i
 Rmax = L/2;
- 
-grid = sierpinski(N, rec_lvl, false);
-
+N = 3^9;
 data_range = iterations;
-distances = zeros(1, data_range);
-walkers = init_walkers(n_walkers);
+
 
 for i_rec=1:9
-    rec_lvl = 1;
+    rec_lvl = i_rec;
+    disp(['REC LVL: ' num2str(i_rec)]);
+    
+    % Load fractal
+    grid = matfile(['fractals/sierpinski_' num2str(i_rec) '_' num2str(N) '.mat']).grid;
+    disp('sierpinski loaded');
+    
+    dt = (L/(3^rec_lvl))^2/10; % L/3^i
+    distances = zeros(1, data_range);
+    walkers = init_walkers(n_walkers);
+
     
     for i=1:n_walkers
         if mod(i, 50) == 0
@@ -52,17 +57,11 @@ for i_rec=1:9
     disp('Ajuste:');
     disp(['y = x*' num2str(p(1)) ' + ' num2str(p(2))]);
 
-    %plot(x, distances, x, 2*x, x, y_pred);
-
+    plot(x, distances, x, 2*x, x, y_pred);
+    save_to_file('random_walks_data.txt', [num2str(i_rec) ' ' num2str(p(1)) ' ' num2str(p(2))]);
 end
 
 % ----------------- METHODS -----------------
-
-function r = save_to_file(filename, data)
-    fileID = fopen(filename, 'a');
-    fprintf(fileID, [data '\n']);
-    fclose(fileID);
-end  
 
 function res = init_walkers(n_walkers)
     global L; global Rmax;
