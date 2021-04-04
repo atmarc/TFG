@@ -8,7 +8,7 @@ from collections import defaultdict
 def rec_vs_energy():
     def energy_to_inf(n_rec, print_graph=False):
         data = []
-        with open(f'data/{n_rec}_data.txt', 'r') as f:
+        with open(f'data/good_data_per_iteration/{n_rec}_data.txt', 'r') as f:
             for line in f.readlines():
                 if line[-1] == '\n': line = line[:-1] 
                 n, rec, e1, error_flag = line.split()
@@ -82,7 +82,7 @@ def rec_vs_energy():
 def execution_time():
     def ex_time_n(n_rec):
         data = []
-        with open(f'data/ex_time_{n_rec}.txt', 'r') as f:
+        with open(f'data/execution_time/ex_time_{n_rec}.txt', 'r') as f:
             for line in f.readlines():
                 if line[-1] == '\n': line = line[:-1] 
                 n, rec, e1, ex_time = line.split()
@@ -118,39 +118,86 @@ def IPR_states():
                 data.append((int(state), float(energy), float(IPR)))
         return data
 
-    data_rec2 = read_data('IPR_data_rec2')
-    data_rec3 = read_data('IPR_data_rec3')
-    data_rec4 = read_data('IPR_data_rec4')
+    def normalize(l):
+        l_max = max(l)
+        l_min = min(l)
+        return list(map(lambda x: (x - l_min)/(l_max - l_min), l))
 
-    X_r2 = [x for (x, _, _) in data_rec2]
-    Y_r2 = [y for (_, y, _) in data_rec2]
-    Z_r2 = [z for (_, _, z) in data_rec2]
 
-    X_r3 = [x for (x, _, _) in data_rec3]
-    Y_r3 = [y for (_, y, _) in data_rec3]
-    Z_r3 = [z for (_, _, z) in data_rec3]
+    # data_rec2 = read_data('data/IPR_data/IPR_data_rec2')
+    # data_rec3 = read_data('data/IPR_data/IPR_data_rec3')
+    # data_rec4 = read_data('data/IPR_data/IPR_data_rec4')
+    data_rec5 = read_data('data/IPR_data/IPR_data_rec5_243')
+
+    # X_r2 = [x for (x, _, _) in data_rec2]
+    # Y_r2 = normalize([y for (_, y, _) in data_rec2])
+    # Z_r2 = ([z for (_, _, z) in data_rec2])
+
+    # X_r3 = [x for (x, _, _) in data_rec3]
+    # Y_r3 = normalize([y for (_, y, _) in data_rec3])
+    # Z_r3 = ([z for (_, _, z) in data_rec3])
    
-    X_r4 = [x for (x, _, _) in data_rec4]
-    Y_r4 = [y for (_, y, _) in data_rec4]
-    Z_r4 = [z for (_, _, z) in data_rec4]
+    # X_r4 = [x for (x, _, _) in data_rec4]
+    # Y_r4 = normalize([y for (_, y, _) in data_rec4])
+    # Z_r4 = ([z for (_, _, z) in data_rec4])
+   
+    X_r5 = [x for (x, _, _) in data_rec5]
+    Y_r5 = normalize([y for (_, y, _) in data_rec5])
+    Z_r5 = ([z for (_, _, z) in data_rec5])
    
     # Y_norm = list(map(lambda x: (x - min(Y))/(max(Y) - min(Y)), Y))
     # Z_norm = list(map(lambda x: (x - min(Z))/(max(Z) - min(Z)), Z))
    
-    plt.plot(X_r2, Z_r2, '--', label='rec 2')
+    # plt.plot(X_r2, Y_r2, '--', label='rec 2')
 
-    plt.plot(X_r3, Z_r3, '--', label='rec 3')
-    # plt.plot(X_r3, Z_r3, '.')
-    plt.plot(X_r4, Z_r4, '--', label='rec 4')
+    # plt.plot(X_r3, Y_r3, '--', label='rec 3')
+    # # plt.plot(X_r3, Z_r3, '.')
+    # plt.plot(X_r4, Y_r4, '--', label='rec 4')
     # plt.plot(X_r4, Z_r4, '.')
+    plt.plot(X_r5, Z_r5, '-', label='rec 5')
     
     # plt.plot(X, Z, 'x')
     plt.legend()
     plt.show()
 
 
+def min_size_energy_vs_rec():
+    data = []
+    folder = 'data/good_data_per_iteration/'
+    for i in range(1, 10):
+        with open(f'{folder}{i}_data.txt') as f:
+            for line in f.readlines():
+                if line[-1] == '\n': line = line[:-1]                
+                n, rec, energy, error_flag = line.split()
+                data.append((int(n), int(rec), float(energy), int(error_flag)))
+
+    for fact_min in range(1, 7):
+        Y = [e for (n, rec, e, _) in data if n == (3**rec * fact_min)]
+        X = list(range(1, len(Y) + 1))
+        print(X)
+        print(Y)
+        def func(x, b, c):
+            return b * np.exp(x*c) 
+
+        popt, pcov = curve_fit(func, X, Y)
+        X_pred = np.arange(0, max(X) + 0.001, 0.0001)
+        Y_pred = func(X_pred, *popt)
+        
+        params = list(map(lambda x: round(x,4), popt))
+        print('')
+        print(f'y = {params[0]} * exp({params[1]}*x)')
+        
+        plt.plot(X_pred, Y_pred, '--', label="Aproximation")
+        plt.plot(X, Y, 'x')
+        plt.yscale('log')
+        plt.title(f'Energy vs iteration (with min factor = {fact_min})')
+        plt.xlabel('Iteration of the fractal')
+        plt.xlabel('Energy')
+        plt.show()
+
 
 if __name__ == "__main__":
     # execution_time()
     # IPR_states()
-    rec_vs_energy()
+    # rec_vs_energy()
+    min_size_energy_vs_rec()

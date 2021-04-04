@@ -1,9 +1,9 @@
 %Schrodinger2D.m
 display('Starting program');
-N = 3^4;
+N = 3^5;
 Neig = N; % number of eigenvalues to be found
 Rmax = 0.5;
-recursion_level = 2;
+recursion_level = 5;
 
 dx = (Rmax*2)/N;  
 x = linspace(-Rmax + dx/2, Rmax - dx/2, N);   % one-dimensional space lattice
@@ -69,7 +69,7 @@ for i=1:length(diag(E))
   IPR = sum(sum(sum(PSI_2.^4))*dx^2);
   %disp(['IPR: ' num2str(IPR)]);
   data_to_save = [num2str(i-1) ' ' num2str(E(i), 5) ' ' num2str(IPR)];
-  save_to_file('IPR_data_rec5', data_to_save);
+  save_to_file('data/IPR_data/IPR_data_rec4_2', data_to_save);
   %h = pcolor(x,x,PSI_2);
   %daspect([1 1 1]);
   %colorbar; 
