@@ -1,4 +1,6 @@
 global L; global dt; global Rmax; global N; global grid;
+% So random numbers do not repeat
+rng('shuffle');
 
 iterations = 10000;
 n_walkers = 2000;
@@ -23,7 +25,7 @@ for i_rec=1:9
 
     
     for i=1:n_walkers
-        if mod(i, 50) == 0
+        if mod(i, 100) == 0
             display(['Walker ' num2str(i)]);
         end
         
@@ -57,7 +59,8 @@ for i_rec=1:9
     disp('Ajuste:');
     disp(['y = x*' num2str(p(1)) ' + ' num2str(p(2))]);
 
-    %plot(x, distances, x, 2*x, x, y_pred);
+    % plot(x, distances, x, 2*x, x, y_pred);
+    % pause;
     save_to_file('random_walks_data.txt', [num2str(i_rec) ' ' num2str(p(1)) ' ' num2str(p(2))]);
 end
 

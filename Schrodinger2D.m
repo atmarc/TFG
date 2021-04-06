@@ -1,5 +1,5 @@
 %Schrodinger2D.m
-display('Starting program');
+disp('Starting program');
 N = 3^5;
 Neig = N; % number of eigenvalues to be found
 Rmax = 0.5;
