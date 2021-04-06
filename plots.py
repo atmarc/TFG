@@ -4,7 +4,6 @@ from scipy.optimize import curve_fit
 from collections import defaultdict
 
 
-# ---------------------------- 1/N vs energy ----------------------------
 def rec_vs_energy():
     def energy_to_inf(n_rec, print_graph=False):
         data = []
@@ -196,8 +195,25 @@ def min_size_energy_vs_rec():
         plt.show()
 
 
+def random_walks():
+    data = defaultdict(list)
+    with open('data/random_walks_data.txt') as f:
+        for line in f.readlines():
+            if line[-1] == '\n': line = line[:-1]
+            rec, m, n = line.split()
+            data[int(rec)].append(float(m))
+    
+    mean_data = [(key, sum(item)/len(item)) for key, item in data.items()]    
+    X = [x for (x, _) in mean_data]
+    Y = [y for (_, y) in mean_data]
+
+    plt.plot(X, Y, '--')
+    plt.plot(X, Y, 'x')
+    plt.show()
+
 if __name__ == "__main__":
     # execution_time()
     # IPR_states()
     # rec_vs_energy()
-    min_size_energy_vs_rec()
+    # min_size_energy_vs_rec()
+    random_walks()
