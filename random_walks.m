@@ -2,8 +2,8 @@ global L; global dt; global Rmax; global N; global grid;
 % So random numbers do not repeat
 rng('shuffle');
 
-iterations = 10000;
-n_walkers = 2000;
+iterations = 1000000;
+n_walkers = 1000;
 rec_lvl = 1;
 L = 1;
 Rmax = L/2;
@@ -11,32 +11,45 @@ N = 3^9;
 data_range = iterations;
 
 
-for i_rec=1
+for i_rec=9
+    tic
     rec_lvl = i_rec;
     disp(['REC LVL: ' num2str(i_rec)]);
-    
     % Load fractal
     grid = matfile(['fractals/sierpinski_' num2str(i_rec) '_' num2str(N) '.mat']).grid;
-    disp('sierpinski loaded');
+    % disp('sierpinski loaded');
     
-    dt = (L/(3^rec_lvl))^2/10; % L/3^i
+    track_matrix = zeros(N, N);
+    % disp('track_matrix computed');
+
+    dt = ((L/(3^rec_lvl))/10)^2; % L/3^i
     distances = zeros(1, data_range);
     walkers = init_walkers(n_walkers);
 
-    
     for i=1:n_walkers
-        if mod(i, 100) == 0
-            display(['Walker ' num2str(i)]);
-        end
+        % if mod(i, 5) == 0
+        %     display(['Walker ' num2str(i)]);
+        % end
         
         i_data = 1;
         for j=1:iterations
-            if mod(j, 50000) == 0
-                display(['Iteration ' num2str(j)]);
-            end
+            % if mod(j, 50000) == 0
+            %     display(['Iteration ' num2str(j)]);
+            % end
             walkers(i) = update_walker(walkers(i));
             dx = walkers(i).init_x - walkers(i).x;
             dy = walkers(i).init_y - walkers(i).y;
+
+            % ---------------------------
+            try
+                g_posx = floor((walkers(i).x_pbc + Rmax) * N/L) + 1;
+                g_posy = floor((walkers(i).y_pbc + Rmax) * N/L) + 1;
+                track_matrix(g_posx, g_posy) = track_matrix(g_posx, g_posy) + 1; 
+            catch E
+                disp([num2str(g_posx) ' ' num2str(g_posy)]);
+                rethrow(E);
+            end
+            % ---------------------------
 
             if mod(j, floor(iterations/data_range)) == 0 && i_data <= data_range
                 distances(i_data) = distances(i_data) + dx^2 + dy^2;
@@ -56,12 +69,19 @@ for i_rec=1
     p = polyfit(x, distances, 1);
     y_pred = polyval(p, x);
 
-    disp('Ajuste:');
+    % disp('Ajuste:');
     disp(['y = x*' num2str(p(1)) ' + ' num2str(p(2))]);
 
     % plot(x, distances, x, 2*x, x, y_pred);
+    % imagesc(track_matrix); 
+    % colorbar;
     % pause;
-    save_to_file('random_walks_data.txt', [num2str(i_rec) ' ' num2str(p(1)) ' ' num2str(p(2))]);
+    toc
+    
+    disp('Saving data...');
+    save(['data/' num2str(i_rec) '_rand_walks_vars.mat'], 'track_matrix', 'distances', '-v7.3')
+    save_to_file('data/random_walks_data.txt', [num2str(i_rec) ' ' num2str(p(1)) ' ' num2str(p(2))]);
+
 end
 
 % ----------------- METHODS -----------------

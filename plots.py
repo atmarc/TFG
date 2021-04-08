@@ -123,37 +123,40 @@ def IPR_states():
         return list(map(lambda x: (x - l_min)/(l_max - l_min), l))
 
 
-    # data_rec2 = read_data('data/IPR_data/IPR_data_rec2')
-    # data_rec3 = read_data('data/IPR_data/IPR_data_rec3')
-    # data_rec4 = read_data('data/IPR_data/IPR_data_rec4')
+    data_rec2 = read_data('data/IPR_data/IPR_data_rec2')
+    data_rec3 = read_data('data/IPR_data/IPR_data_rec3')
+    data_rec4 = read_data('data/IPR_data/IPR_data_rec4')
     data_rec5 = read_data('data/IPR_data/IPR_data_rec5_243')
 
-    # X_r2 = [x for (x, _, _) in data_rec2]
-    # Y_r2 = normalize([y for (_, y, _) in data_rec2])
-    # Z_r2 = ([z for (_, _, z) in data_rec2])
+    X_r2 = [x for (x, _, _) in data_rec2]
+    Y_r2 = ([y for (_, y, _) in data_rec2])
+    Z_r2 = ([z for (_, _, z) in data_rec2])
 
-    # X_r3 = [x for (x, _, _) in data_rec3]
-    # Y_r3 = normalize([y for (_, y, _) in data_rec3])
-    # Z_r3 = ([z for (_, _, z) in data_rec3])
+    X_r3 = [x for (x, _, _) in data_rec3]
+    Y_r3 = ([y for (_, y, _) in data_rec3])
+    Z_r3 = ([z for (_, _, z) in data_rec3])
    
-    # X_r4 = [x for (x, _, _) in data_rec4]
-    # Y_r4 = normalize([y for (_, y, _) in data_rec4])
-    # Z_r4 = ([z for (_, _, z) in data_rec4])
+    X_r4 = [x for (x, _, _) in data_rec4]
+    Y_r4 = ([y for (_, y, _) in data_rec4])
+    Z_r4 = ([z for (_, _, z) in data_rec4])
    
     X_r5 = [x for (x, _, _) in data_rec5]
-    Y_r5 = normalize([y for (_, y, _) in data_rec5])
+    Y_r5 = ([y for (_, y, _) in data_rec5])
     Z_r5 = ([z for (_, _, z) in data_rec5])
    
     # Y_norm = list(map(lambda x: (x - min(Y))/(max(Y) - min(Y)), Y))
     # Z_norm = list(map(lambda x: (x - min(Z))/(max(Z) - min(Z)), Z))
    
-    # plt.plot(X_r2, Y_r2, '--', label='rec 2')
+    plt.plot(X_r2, Y_r2, '--', label='rec 2')
+    plt.plot(X_r2, Y_r2, 'x', label='rec 2')
+    plt.plot(X_r3, Y_r3, '--', label='rec 3')
+    plt.plot(X_r3, Y_r3, 'x', label='rec 3')
+    plt.plot(X_r4, Y_r4, '--', label='rec 4')
+    plt.plot(X_r4, Y_r4, 'x', label='rec 4')
 
-    # plt.plot(X_r3, Y_r3, '--', label='rec 3')
-    # # plt.plot(X_r3, Z_r3, '.')
-    # plt.plot(X_r4, Y_r4, '--', label='rec 4')
-    # plt.plot(X_r4, Z_r4, '.')
-    plt.plot(X_r5, Z_r5, '-', label='rec 5')
+    # plt.plot(X_r5, Y_r5, '--', label='rec 5')
+    # plt.plot(X_r5, Y_r5, 'x', label='rec 5')
+    # plt.plot(X_r5, Z_r5, '-', label='rec 5')
     
     # plt.plot(X, Z, 'x')
     plt.legend()
@@ -197,7 +200,7 @@ def min_size_energy_vs_rec():
 
 def random_walks():
     data = defaultdict(list)
-    with open('data/random_walks_data.txt') as f:
+    with open('random_walks_data.txt') as f:
         for line in f.readlines():
             if line[-1] == '\n': line = line[:-1]
             rec, m, n = line.split()
@@ -214,6 +217,6 @@ def random_walks():
 if __name__ == "__main__":
     # execution_time()
     # IPR_states()
-    # rec_vs_energy()
+    rec_vs_energy()
     # min_size_energy_vs_rec()
-    random_walks()
+    # random_walks()
