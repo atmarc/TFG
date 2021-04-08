@@ -11,7 +11,7 @@ N = 3^9;
 data_range = iterations;
 
 
-for i_rec=1
+for i_rec=1:9
     rec_lvl = i_rec;
     disp(['REC LVL: ' num2str(i_rec)]);
     
