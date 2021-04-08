@@ -4,14 +4,14 @@ rng('shuffle');
 
 iterations = 1000000;
 n_walkers = 1000;
-rec_lvl = 1;
+%rec_lvl = 1;
 L = 1;
 Rmax = L/2;
 N = 3^9;
 data_range = iterations;
 
 
-for i_rec=9
+for i_rec=rec_lvl
     tic
     rec_lvl = i_rec;
     disp(['REC LVL: ' num2str(i_rec)]);

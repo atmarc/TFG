@@ -1,0 +1,9 @@
+nohup matlab -nodisplay -nosplash -nodesktop -r "rec_lvl=1;run('random_walks.m');exit;" > 1_random_walks.out &
+nohup matlab -nodisplay -nosplash -nodesktop -r "rec_lvl=2;run('random_walks.m');exit;" > 2_random_walks.out &
+nohup matlab -nodisplay -nosplash -nodesktop -r "rec_lvl=3;run('random_walks.m');exit;" > 3_random_walks.out &
+nohup matlab -nodisplay -nosplash -nodesktop -r "rec_lvl=4;run('random_walks.m');exit;" > 4_random_walks.out &
+nohup matlab -nodisplay -nosplash -nodesktop -r "rec_lvl=5;run('random_walks.m');exit;" > 5_random_walks.out &
+nohup matlab -nodisplay -nosplash -nodesktop -r "rec_lvl=6;run('random_walks.m');exit;" > 6_random_walks.out &
+nohup matlab -nodisplay -nosplash -nodesktop -r "rec_lvl=7;run('random_walks.m');exit;" > 7_random_walks.out &
+nohup matlab -nodisplay -nosplash -nodesktop -r "rec_lvl=8;run('random_walks.m');exit;" > 8_random_walks.out &
+nohup matlab -nodisplay -nosplash -nodesktop -r "rec_lvl=9;run('random_walks.m');exit;" > 9_random_walks.out &
