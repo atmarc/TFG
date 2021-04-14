@@ -1,28 +1,31 @@
-// #include "matplotlibcpp.h"
-// namespace plt = matplotlibcpp;
-// int main() {
-//     plt::plot({1,3,2,4});
-//     plt::show();
-// }
-
 #include <cmath>
 #include <iostream>
 #include <vector>
 #include <time.h>
 #include <chrono>
 #include <fstream>
+#include <cstdlib>
+#include <string>
 
 using namespace std;
 
+// Program parameters: iterations, n_walkers, rec_lvl
 
-int iterations = pow(10,6);
-int n_walkers = 1;
-int rec_lvl = 5;
+// (1, 10^4), (2, 10^5), (3, 10^6), (4, 10^7), (5,10^7), (6, 10^8), (7, 2*10^8)
+
+int iterations = 2 * pow(10, 8);
+int n_walkers = 100;
+float data_size = 10000;
+int rec_lvl = 7;
 float L = 1;
-float Rmax = 0.5;
-float N = pow(3,5);
-float dt = pow((L/pow(3, rec_lvl))/10, 2);
+float Rmax = L / 2;
+float N = pow(3, rec_lvl);
+float tam_min = L / pow(3, rec_lvl); 
+float dt = pow(tam_min, 2) / 10;
+float sqrt_dt = sqrt(dt);
 
+float default_filename = false;
+string data_folder = "";
 vector<vector<int>> grid;
 
 struct Walker {
@@ -81,10 +84,10 @@ void print_mat(vector<vector<int>> &mat){
 
 
 bool valid_pos(float x, float y) {
-    int g_posx = (x + Rmax) * (float) N/L;
-    int g_posy = (y + Rmax) * (float) N/L;
+    int g_posx = (x + Rmax) * N/L;
+    int g_posy = (y + Rmax) * N/L;
     if (g_posy < 0 || g_posx < 0 || g_posy >= N || g_posx >= N)
-        cout << "Valid pos: " << x << ' ' << y << ' ' << g_posx << ' ' << g_posy << endl;
+        cout << "EXCEPTION(Valid pos): " << x << ' ' << y << ' ' << g_posx << ' ' << g_posy << endl;
     bool res = grid[g_posx][g_posy] == 0; 
     return res;
 }
@@ -92,8 +95,8 @@ bool valid_pos(float x, float y) {
 
 void init_walkers(vector<Walker> &walkers) {
     for (int i = 0; i < walkers.size(); ++i) {
-        float x = float(rand())/RAND_MAX * L - Rmax;
-        float y = float(rand())/RAND_MAX * L - Rmax;
+        float x = float(rand())/(RAND_MAX + 1) * L - Rmax;
+        float y = float(rand())/(RAND_MAX + 1) * L - Rmax;
         
         while (!valid_pos(x, y)) {
             x = float(rand())/RAND_MAX * L - Rmax;
@@ -123,24 +126,37 @@ void random_values(float &z1, float &z2) {
 
 
 void update_walker(Walker *walker) {
-    float tmp_x, tmp_x_pbc, tmp_y, tmp_y_pbc; 
     float a, b;
     random_values(a, b);
-    tmp_x = walker->x + a * sqrt(dt);
-    tmp_x_pbc = walker->x_pbc + a * sqrt(dt);
 
-    tmp_y = walker->y + b * sqrt(dt);
-    tmp_y_pbc = walker->y_pbc + b * sqrt(dt);
+    float tmp_x = walker->x + a * sqrt_dt;
+    float tmp_x_pbc = walker->x_pbc + a * sqrt_dt;
+    float tmp_y = walker->y + b * sqrt_dt;
+    float tmp_y_pbc = walker->y_pbc + b * sqrt_dt;
 
-    if (tmp_x_pbc <= -Rmax) tmp_x_pbc = tmp_x_pbc + L; 
-    else if (tmp_x_pbc >= Rmax)
-        tmp_x_pbc = tmp_x_pbc - L; 
-    if (tmp_y_pbc <= -Rmax) 
-        tmp_y_pbc = tmp_y_pbc + L; 
-    else if (tmp_y_pbc >= Rmax)
-        tmp_y_pbc = tmp_y_pbc - L; 
+    int g_posx = (tmp_x_pbc + Rmax) * N/L;
+    int g_posy = (tmp_y_pbc + Rmax) * N/L;
 
-    if (valid_pos(tmp_x_pbc, tmp_y_pbc)) {
+    if (g_posx < 0) {
+        tmp_x_pbc += L; 
+        g_posx += N;
+    }
+    else if (g_posx >= N) {
+        tmp_x_pbc -= L; 
+        g_posx -= N;
+    }
+    
+    if (g_posy < 0) {
+        tmp_y_pbc += L; 
+        g_posy += N;
+    } 
+    else if (g_posy >= N) {
+        tmp_y_pbc -= L; 
+        g_posy -= N;
+    }
+
+    // valid_pos(tmp_x_pbc, tmp_y_pbc) 
+    if (grid[g_posx][g_posy] == 0) {
         walker->x = tmp_x;
         walker->y = tmp_y;
         walker->x_pbc = tmp_x_pbc;
@@ -150,12 +166,22 @@ void update_walker(Walker *walker) {
 
 
 void storing_distances(const vector <float> &distances) {
-    cout << "Storing distances" << endl;
+    string file_name = data_folder + '/';
+    if (default_filename) 
+        file_name += "distances.txt";
+    else
+        file_name += "distances_" + to_string(int(rec_lvl)) + '_' + to_string(int(n_walkers)) + '_' + to_string(int(N)) + ".txt";
 
-    ofstream dist_file("distances.txt");
-    
+    cout << "Storing distances on " << file_name << endl;
+    ofstream dist_file(file_name);
+
+    dist_file << iterations << ' ' << n_walkers << ' ' << rec_lvl << ' ';
+    dist_file << L << ' ' << N << ' ' << tam_min << ' ' << dt << ' ' << data_size << endl;  
+
     dist_file << distances[0] / n_walkers;
-    for (int i = 0; i < distances.size(); ++i) {
+    int batch_size = iterations / data_size;
+
+    for (int i = 0; i < distances.size(); i += batch_size) {
         dist_file << ',' << distances[i] / n_walkers;
     }
 
@@ -164,9 +190,15 @@ void storing_distances(const vector <float> &distances) {
 
 
 void storing_track_mat(const vector<vector<int>> &track_mat) {
-    cout << "Storing track_mat" << endl;
+    string file_name = data_folder + '/';
+    if (default_filename)
+        file_name += "track_mat.txt";
+    else
+        file_name += "track_mat_" + to_string(int(rec_lvl)) + '_' + to_string(int(n_walkers)) + '_' + to_string(int(N)) + ".txt";
+        
+    cout << "Storing track_mat on " << file_name << endl;
 
-    ofstream track_mat_file("track_mat.txt");
+    ofstream track_mat_file(file_name);
 
     int rows = track_mat.size();
     int cols = track_mat[0].size();
@@ -183,10 +215,22 @@ void storing_track_mat(const vector<vector<int>> &track_mat) {
 
 
 int main(int argc, char* argv[]) {
-
     // Read parameters
+    if (argc > 1) {
+        iterations = atoi(argv[1]);
+        n_walkers = atoi(argv[2]);
+        rec_lvl = atoi(argv[3]);
+        data_folder = argv[4];
 
+        // Compute new global variables        
+        N = pow(3, rec_lvl);
+        tam_min = L / pow(3, rec_lvl); 
+        dt = pow(tam_min, 2) / 10;
+        sqrt_dt = sqrt(dt);
+        cout << "Parameters: " << iterations << ' ' << n_walkers << ' ' << rec_lvl << endl;
+    }
 
+    data_size = data_size > iterations ? iterations : data_size;
 
 
     using std::chrono::high_resolution_clock;
@@ -211,10 +255,15 @@ int main(int argc, char* argv[]) {
 
     auto t2 = high_resolution_clock::now();
     duration<double, std::milli> ms_double = t2 - t1;
-    std::cout << "Initialization time: " << ms_double.count() << "ms" << endl;
+    std::cout << "Initialization time: " << ms_double.count()/1000 << "s" << endl;
 
     for (int i = 0; i < n_walkers; ++i) {
-        if (i % 50 == 0) cout << "Walker: " << i << endl; 
+        // if (i % 10 == 0) {
+        //     auto elapsed = high_resolution_clock::now();
+        //     ms_double = elapsed - t2;
+        //     cout << "Walker: " << i << " Elapsed time: " << ms_double.count() << "ms" << endl; 
+        // } 
+        
         for (int j = 0; j < iterations; ++j) {
             // if (j % 50000 == 0) cout << "Iteration: " << j << endl; 
             update_walker(&walkers[i]);
@@ -236,14 +285,14 @@ int main(int argc, char* argv[]) {
     
     auto t3 = high_resolution_clock::now();
     ms_double = t3 - t2;
-    std::cout << "Iterations time: " << ms_double.count() << "ms" << endl;
+    std::cout << "Iterations time: " << ms_double.count()/1000 << "s" << endl;
 
-    // storing_distances(distances);
+    storing_distances(distances);
 
     storing_track_mat(track_mat);
 
     auto t4 = high_resolution_clock::now();
     ms_double = t4 - t3;
-    std::cout << "Storing time: " << ms_double.count() << "ms" << endl;
+    std::cout << "Storing time: " << ms_double.count()/1000 << "s" << endl;
 
 }
