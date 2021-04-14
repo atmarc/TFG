@@ -95,12 +95,12 @@ bool valid_pos(float x, float y) {
 
 void init_walkers(vector<Walker> &walkers) {
     for (int i = 0; i < walkers.size(); ++i) {
-        float x = rand()/float(RAND_MAX + 1) * L - Rmax;
-        float y = rand()/float(RAND_MAX + 1) * L - Rmax;
+        float x = rand()/(float(RAND_MAX) + 1) * L - Rmax;
+        float y = rand()/(float(RAND_MAX) + 1) * L - Rmax;
         
         while (!valid_pos(x, y)) {
-            x = float(rand())/RAND_MAX * L - Rmax;
-            y = float(rand())/RAND_MAX * L - Rmax;
+            x = rand()/(float(RAND_MAX) + 1) * L - Rmax;
+            y = rand()/(float(RAND_MAX) + 1) * L - Rmax;
         }
         
         walkers[i].x = x;
