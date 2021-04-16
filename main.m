@@ -1,11 +1,13 @@
 function r = main()
     pot = 1000000;
     for rec=6
-        for i=5:6
+        for i=5:8
             N = i * (3^6);
+            tic
             data = schrodinger_p(N, rec, pot, false);
             disp(data);
-            save_to_file([num2str(rec) '_data2.txt'], data);
+            toc
+            save_to_file([num2str(rec) '_data3.txt'], data);
         end
     end
 end
