@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import curve_fit
 from collections import defaultdict
-
+import os
 
 def rec_vs_energy():
     def energy_to_inf(n_rec, print_graph=False):
@@ -199,20 +199,28 @@ def min_size_energy_vs_rec():
 
 
 def random_walks():
-    data = defaultdict(list)
-    with open('random_walks_data.txt') as f:
-        for line in f.readlines():
-            if line[-1] == '\n': line = line[:-1]
-            rec, m, n = line.split()
-            data[int(rec)].append(float(m))
-    
-    mean_data = [(key, sum(item)/len(item)) for key, item in data.items()]    
-    X = [x for (x, _) in mean_data]
-    Y = [y for (_, y) in mean_data]
+    data = []
+    files = os.listdir('data/random_walks')
 
-    plt.plot(X, Y, '--')
-    plt.plot(X, Y, 'x')
+    for f in [x for x in files if x.startswith('distances')]:
+        with open('data/random_walks/' + f) as f:
+            params = f.readline()
+            params = list(map(float, (params[:-1].split())))
+            iterations, n_walkers, rec_lvl, L, N, tam_min, dt, data_size = params
+
+            values = f.read().split(',')
+            values = list(map(float, values))
+
+        
+        X = np.array(list(range(len(values)))) * dt * iterations/data_size
+        recta = np.poly1d(np.polyfit(X, values, 1))
+        X_pred = np.arange(0, max(X), max(X)/100)
+        Y_pred = recta(X_pred)
+        print(rec_lvl, recta)
+        plt.plot(X_pred, Y_pred, label=f"Distances rec_lvl={rec_lvl}")
+    plt.legend()
     plt.show()
+
 
 if __name__ == "__main__":
     # execution_time()
