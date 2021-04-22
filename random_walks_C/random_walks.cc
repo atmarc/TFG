@@ -9,23 +9,23 @@
 
 using namespace std;
 
-// Program parameters: iterations, n_walkers, rec_lvl
+// Program parameters: iterations, n_walkers, rec_lvl, out_folder
 
 // (1, 10^4), (2, 10^5), (3, 10^6), (4, 10^7), (5,10^7), (6, 10^8), (7, 2*10^8)
 
-int iterations = 2 * pow(10, 8);
-int n_walkers = 100;
+int iterations = pow(10, 9);
+int n_walkers = 1;
 float data_size = 10000;
-int rec_lvl = 7;
+int rec_lvl = 8;
 float L = 1;
-float Rmax = L / 2;
+float Rmax = L / 2.0;
 float N = pow(3, rec_lvl);
 float tam_min = L / pow(3, rec_lvl); 
-float dt = pow(tam_min, 2) / 10;
+float dt = pow(tam_min / 10, 2);
 float sqrt_dt = sqrt(dt);
 
-float default_filename = false;
-string data_folder = "";
+float default_filename = true;
+string data_folder = ".";
 vector<vector<int>> grid;
 
 struct Walker {
@@ -84,25 +84,32 @@ void print_mat(vector<vector<int>> &mat){
 
 
 bool valid_pos(float x, float y) {
-    int g_posx = (x + Rmax) * N/L;
-    int g_posy = (y + Rmax) * N/L;
-    if (g_posy < 0 || g_posx < 0 || g_posy >= N || g_posx >= N)
+    int g_posx = ((x + Rmax) * N / L);
+    int g_posy = ((y + Rmax) * N / L);
+
+    g_posx -= (g_posx == N);
+    g_posy -= (g_posy == N);
+
+    if (g_posy < 0 || g_posx < 0 || g_posy >= N || g_posx >= N) {
         cout << "EXCEPTION(Valid pos): " << x << ' ' << y << ' ' << g_posx << ' ' << g_posy << endl;
-    bool res = grid[g_posx][g_posy] == 0; 
-    return res;
+    }
+    
+    return grid[g_posx][g_posy] == 0; 
 }
 
 
 void init_walkers(vector<Walker> &walkers) {
     for (int i = 0; i < walkers.size(); ++i) {
-        float x = rand()/(float(RAND_MAX) + 1) * L - Rmax;
-        float y = rand()/(float(RAND_MAX) + 1) * L - Rmax;
+        double x = -0.5;
+        double y = -0.5;
+        // double x = rand()/(double(RAND_MAX)) * L - Rmax;
+        // double y = rand()/(double(RAND_MAX)) * L - Rmax;
         
-        while (!valid_pos(x, y)) {
-            x = rand()/(float(RAND_MAX) + 1) * L - Rmax;
-            y = rand()/(float(RAND_MAX) + 1) * L - Rmax;
-        }
-        
+        // while (!valid_pos(x, y)) {
+        //     x = rand()/(double(RAND_MAX)) * L - Rmax;
+        //     y = rand()/(double(RAND_MAX)) * L - Rmax;
+        // }
+        // cout << i<< "-> init pos: " << x << ' ' << y << endl;
         walkers[i].x = x;
         walkers[i].x_pbc = x;
         walkers[i].y = y;
@@ -134,29 +141,13 @@ void update_walker(Walker *walker) {
     float tmp_y = walker->y + b * sqrt_dt;
     float tmp_y_pbc = walker->y_pbc + b * sqrt_dt;
 
-    int g_posx = (tmp_x_pbc + Rmax) * N/L;
-    int g_posy = (tmp_y_pbc + Rmax) * N/L;
-
-    if (g_posx < 0) {
-        tmp_x_pbc += L; 
-        g_posx += N;
-    }
-    else if (g_posx >= N) {
-        tmp_x_pbc -= L; 
-        g_posx -= N;
-    }
+    if (tmp_x_pbc < -Rmax) tmp_x_pbc += L;
+    else if (tmp_x_pbc > Rmax) tmp_x_pbc -= L;
     
-    if (g_posy < 0) {
-        tmp_y_pbc += L; 
-        g_posy += N;
-    } 
-    else if (g_posy >= N) {
-        tmp_y_pbc -= L; 
-        g_posy -= N;
-    }
+    if (tmp_y_pbc < -Rmax) tmp_y_pbc += L;
+    else if (tmp_y_pbc > Rmax) tmp_y_pbc -= L;
 
-    // valid_pos(tmp_x_pbc, tmp_y_pbc) 
-    if (grid[g_posx][g_posy] == 0) {
+    if (valid_pos(tmp_x_pbc, tmp_y_pbc)) {
         walker->x = tmp_x;
         walker->y = tmp_y;
         walker->x_pbc = tmp_x_pbc;
@@ -225,12 +216,12 @@ int main(int argc, char* argv[]) {
         // Compute new global variables        
         N = pow(3, rec_lvl);
         tam_min = L / pow(3, rec_lvl); 
-        dt = pow(tam_min, 2) / 10;
+        dt = pow(tam_min / 100, 2);
         sqrt_dt = sqrt(dt);
-        cout << "Parameters: " << iterations << ' ' << n_walkers << ' ' << rec_lvl << endl;
     }
 
     data_size = data_size > iterations ? iterations : data_size;
+    cout << "Parameters: " << iterations << ' ' << n_walkers << ' ' << rec_lvl << endl;
 
 
     using std::chrono::high_resolution_clock;
@@ -267,19 +258,23 @@ int main(int argc, char* argv[]) {
         for (int j = 0; j < iterations; ++j) {
             // if (j % 50000 == 0) cout << "Iteration: " << j << endl; 
             update_walker(&walkers[i]);
-            
+
             float dx = walkers[i].x_init - walkers[i].x;
             float dy = walkers[i].y_init - walkers[i].y;
+            distances[j] += dx*dx + dy*dy;
 
+            // ---------------------------- Keep track of traces ----------------------------
             int g_posx = (walkers[i].x_pbc + Rmax) * N/L;
             int g_posy = (walkers[i].y_pbc + Rmax) * N/L;
 
+            g_posx -= (g_posx == N);
+            g_posy -= (g_posy == N);
+
             if (g_posy < 0 || g_posx < 0 || g_posy >= N || g_posx >= N)
                 cout << "Update: " << walkers[i].x_pbc << ' ' << walkers[i].y_pbc << ' ' << g_posx << ' ' << g_posy << endl;
-            
-            track_mat[g_posx][g_posy] += 1;
-            distances[j] += dx*dx + dy*dy;
 
+            track_mat[g_posx][g_posy] += 1;
+            // ------------------------------------------------------------------------------
         }
     }
     
