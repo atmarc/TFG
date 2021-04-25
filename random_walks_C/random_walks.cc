@@ -24,7 +24,7 @@ float tam_min = L / pow(3, rec_lvl);
 float dt = pow(tam_min / 10, 2);
 float sqrt_dt = sqrt(dt);
 
-float default_filename = false;
+float default_filename = true;
 string data_folder = ".";
 vector<vector<int>> grid;
 
@@ -101,15 +101,15 @@ bool valid_pos(float x, float y) {
 
 void init_walkers(vector<Walker> &walkers) {
     for (int i = 0; i < walkers.size(); ++i) {
-        double x = -0.5;
-        double y = -0.5;
-        // double x = rand()/(double(RAND_MAX)) * L - Rmax;
-        // double y = rand()/(double(RAND_MAX)) * L - Rmax;
+        // double x = -0.5;
+        // double y = -0.5;
+        double x = rand()/(double(RAND_MAX)) * L - Rmax;
+        double y = rand()/(double(RAND_MAX)) * L - Rmax;
         
-        // while (!valid_pos(x, y)) {
-        //     x = rand()/(double(RAND_MAX)) * L - Rmax;
-        //     y = rand()/(double(RAND_MAX)) * L - Rmax;
-        // }
+        while (!valid_pos(x, y)) {
+            x = rand()/(double(RAND_MAX)) * L - Rmax;
+            y = rand()/(double(RAND_MAX)) * L - Rmax;
+        }
         // cout << i<< "-> init pos: " << x << ' ' << y << endl;
         walkers[i].x = x;
         walkers[i].x_pbc = x;
