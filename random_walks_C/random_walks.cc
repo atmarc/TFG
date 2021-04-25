@@ -24,7 +24,7 @@ float tam_min = L / pow(3, rec_lvl);
 float dt = pow(tam_min / 10, 2);
 float sqrt_dt = sqrt(dt);
 
-float default_filename = true;
+float default_filename = false;
 string data_folder = ".";
 vector<vector<int>> grid;
 
@@ -33,6 +33,7 @@ struct Walker {
     float x_pbc, y_pbc;
     float x_init, y_init;
 };
+
 
 int isSierpinskiCarpetPixelFilled(int x, int y, int width, int height, int d, int max_depth, float v) {
 	int x2 = x * 3 / width;
@@ -64,7 +65,7 @@ void sierpinski(vector<vector<int>> &mat, int rec, bool verbose){
         for (int j = 0; j < cols; ++j) {
             mat[i][j] = isSierpinskiCarpetPixelFilled(i, j, rows, cols, 1, rec, 1);
         }
-        if (verbose && i % 500 == 0) cout << "fila " << i << endl;
+        // if (verbose && i % 500 == 0) cout << "fila " << i << endl;
     }
 }
 
@@ -90,9 +91,9 @@ bool valid_pos(float x, float y) {
     g_posx -= (g_posx == N);
     g_posy -= (g_posy == N);
 
-    if (g_posy < 0 || g_posx < 0 || g_posy >= N || g_posx >= N) {
-        cout << "EXCEPTION(Valid pos): " << x << ' ' << y << ' ' << g_posx << ' ' << g_posy << endl;
-    }
+    // if (g_posy < 0 || g_posx < 0 || g_posy >= N || g_posx >= N) {
+    //     cout << "EXCEPTION(Valid pos): " << x << ' ' << y << ' ' << g_posx << ' ' << g_posy << endl;
+    // }
     
     return grid[g_posx][g_posy] == 0; 
 }
@@ -127,8 +128,8 @@ void random_values(float &z1, float &z2) {
     float r = sqrt(-2 * log(rand_val));
     z1 = r * cos(phi);
     z2 = r * sin(phi);
-    if (r > 10000 || r < -10000 || phi > 10000 || phi < -10000)
-        cout << "rand: "<< r  << ' ' << rand_val << ' ' << phi << endl;
+    // if (r > 10000 || r < -10000 || phi > 10000 || phi < -10000)
+    //     cout << "rand: "<< r  << ' ' << rand_val << ' ' << phi << endl;
 }
 
 
@@ -141,11 +142,11 @@ void update_walker(Walker *walker) {
     float tmp_y = walker->y + b * sqrt_dt;
     float tmp_y_pbc = walker->y_pbc + b * sqrt_dt;
 
-    if (tmp_x_pbc < -Rmax) tmp_x_pbc += L;
-    else if (tmp_x_pbc > Rmax) tmp_x_pbc -= L;
+    tmp_x_pbc -= L * (tmp_x_pbc > Rmax);
+    tmp_x_pbc += L * (tmp_x_pbc < -Rmax);
     
-    if (tmp_y_pbc < -Rmax) tmp_y_pbc += L;
-    else if (tmp_y_pbc > Rmax) tmp_y_pbc -= L;
+    tmp_y_pbc += L * (tmp_y_pbc < -Rmax);
+    tmp_y_pbc -= L * (tmp_y_pbc > Rmax);
 
     if (valid_pos(tmp_x_pbc, tmp_y_pbc)) {
         walker->x = tmp_x;
@@ -270,8 +271,8 @@ int main(int argc, char* argv[]) {
             g_posx -= (g_posx == N);
             g_posy -= (g_posy == N);
 
-            if (g_posy < 0 || g_posx < 0 || g_posy >= N || g_posx >= N)
-                cout << "Update: " << walkers[i].x_pbc << ' ' << walkers[i].y_pbc << ' ' << g_posx << ' ' << g_posy << endl;
+            // if (g_posy < 0 || g_posx < 0 || g_posy >= N || g_posx >= N)
+            //     cout << "Update: " << walkers[i].x_pbc << ' ' << walkers[i].y_pbc << ' ' << g_posx << ' ' << g_posy << endl;
 
             track_mat[g_posx][g_posy] += 1;
             // ------------------------------------------------------------------------------
