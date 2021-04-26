@@ -24,7 +24,7 @@ float tam_min = L / pow(3, rec_lvl);
 float dt = pow(tam_min / 10, 2);
 float sqrt_dt = sqrt(dt);
 
-float default_filename = true;
+float default_filename = false;
 string data_folder = ".";
 vector<vector<int>> grid;
 
