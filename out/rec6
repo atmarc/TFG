@@ -1,0 +1,8 @@
+Parameters: 50000000 1000 6
+Computing sierpinski...
+Initialize walkers...
+Initialization time: 0.188841s
+Iterations time: 4841.45s
+Storing distances on data/random_walks/distances_6_1000_729.txt
+Storing track_mat on data/random_walks/track_mat_6_1000_729.txt
+Storing time: 0.0577491s
