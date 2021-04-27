@@ -1,9 +1,9 @@
 %Schrodinger2D.m
 disp('Starting program');
-N = 3^5;
-Neig = N; % number of eigenvalues to be found
+N = 3^4;
+Neig = 3^4; % number of eigenvalues to be found
 Rmax = 0.5;
-recursion_level = 5;
+recursion_level = 0;
 
 dx = (Rmax*2)/N;  
 x = linspace(-Rmax + dx/2, Rmax - dx/2, N);   % one-dimensional space lattice
@@ -34,6 +34,7 @@ L2 = kron(L, I) + kron(I, L);
 % --------- Sierpinski Carpet ---------
 %%{
 Vext_mat = sierpinski(N, recursion_level, true);
+% Vext_mat = zeros(N, N);
 %imshow(Vext_mat);
 %pause;
 Vext = Vext_mat(:);
@@ -46,36 +47,106 @@ H = Hkin + Hext;  % Hamiltonian
 
 display('Finding eigenvalues...');
 
-opt.p = 100;
+% opt.p = 100;
 %sigma = 'si'; 
-sigma = 'sa';
-
+% sigma = 'sa';
 %[PSI,E] = eigs(H, Neig, sigma, opt);      % Smallest eigenvalue of H
-precision = 1e-5;
+
+precision = 1e-2;
 tic
 [PSI,E,ErrorFlag] = lobpcg(rand(N^2, Neig), H, precision, 10000);
 toc
 display(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
 
+max_IPR_wavefun = [];
+max_IPR = -1;
+min_IPR_wavefun = [];
+min_IPR = N;
+
 for i=1:length(diag(E))  
-  %disp(['Eigenstate ' num2str(i-1) ' energy ' num2str(E(i), 5) '\hbar\omega']); %display result
+  disp(['Eigenstate ' num2str(i-1) ' energy ' num2str(E(i), 5) '\hbar\omega']); %display result
   PSI_i = PSI(:, i);
   PSI_2 = reshape(PSI_i, [N,N]); 
   PSI_2 = PSI_2 / sign(sum(sum(PSI_2)));
   PSI_2 = PSI_2 / dx;
   
-  %disp(sum(sum(PSI_2.^2))*dx^2);
   
   IPR = sum(sum(sum(PSI_2.^4))*dx^2);
-  %disp(['IPR: ' num2str(IPR)]);
+  disp(['IPR: ' num2str(IPR)]);
   data_to_save = [num2str(i-1) ' ' num2str(E(i), 5) ' ' num2str(IPR)];
-  save_to_file('data/IPR_data/IPR_data_rec4_2', data_to_save);
-  %h = pcolor(x,x,PSI_2);
-  %daspect([1 1 1]);
-  %colorbar; 
-  %set(h, 'EdgeColor', 'none');
-  %pause;
+  % save_to_file('data/IPR_data/IPR_data_rec1', data_to_save);
+  % h = pcolor(x,x,PSI_2.^2);
+  % daspect([1 1 1]);
+  % colorbar; 
+  % set(h, 'EdgeColor', 'none');
+  % pause;
+  
+  if IPR > max_IPR
+    max_IPR = IPR;
+    max_IPR_wavefun = PSI_2;
+  end
+  
+  
+  if IPR < min_IPR
+    min_IPR = IPR;
+    min_IPR_wavefun = PSI_2;
+  end
+  
 end
+
+% ------------------------------------------------------
+% Display State with max IPR 
+disp(['State with max IPR: ' num2str(max_IPR)]);
+imagesc(max_IPR_wavefun.^2); 
+colorbar; 
+pause;
+
+% Display State with min IPR 
+disp(['State with min IPR: ' num2str(min_IPR)]);
+imagesc(min_IPR_wavefun.^2); 
+colorbar; 
+pause;
+% ------------------------------------------------------
+
+PSI_0 = PSI(:, 1);
+E_0 = E(1);
+%PSI_0 = PSI_0 * sign(sum(PSI_0));
+PSI_mat = reshape(PSI_0, [N,N]); 
+
+for i=floor(N/2 + 1):N
+    for j=1:ceil(N/2)
+        PSI_mat(j, i) = 0;
+    end
+end
+
+for i=1:N
+    for j=floor(N/2 + 1):N
+        PSI_mat(j, i) = 0;
+    end
+end
+
+%imagesc(PSI_mat);
+PSI_c = PSI_mat(:);
+%PSI_c = PSI(:, 1) + PSI(:, 2) + PSI(:, 3) + PSI(:, 4);
+E_c = (PSI_c' * H * PSI_c) / (PSI_c' * PSI_c);
+
+PSI_prime = H * PSI_c;
+E_c_2 = sqrt((PSI_prime' * PSI_prime)/(PSI_c' * PSI_c));
+disp(['Energy prime: ' num2str(E_c_2)]);
+Eq_18 = (PSI_prime' * PSI_c)^2 / ((PSI_prime' * PSI_prime) * (PSI_c' * PSI_c));
+disp(['Comprovar eq 18: ' num2str(Eq_18)]);
+
+disp(['Energy: ' num2str(E_0)]);
+disp(['Energy corner: ' num2str(E_c)]);
+
+residual_vec = (PSI_c / sqrt(PSI_c' * PSI_c)) - (PSI_0/norm(PSI_0));
+disp(['Residual value: ' num2str(norm(residual_vec))]);
+
+
+
+
+
+
 
 %List of Matlab functions used in the code.
 

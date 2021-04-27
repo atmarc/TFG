@@ -21,12 +21,16 @@ function r = sierpinski(n, d, verbose, potencial)
       display(['Rows computed: ' num2str(i) '/' num2str(n)]);
     end
   % -----------------------------
- 
-    for j = 1:n
-      M(i,j) = sierpinski_rec(i - 1,j - 1, n, n, 1, d, potencial);
+    
+    if d == 0
+      r = M;
+    else
+      for j = 1:n
+        M(i,j) = sierpinski_rec(i - 1,j - 1, n, n, 1, d, potencial);
+      end
+      r = M;
     end
   end
-  r = M;
 end
 
 
