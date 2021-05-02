@@ -1,60 +1,68 @@
 import matplotlib.pyplot as plt
+from matplotlib import rc
+
 import numpy as np
 from scipy.optimize import curve_fit
 from collections import defaultdict
 import os
+import matplotlib
 
-def rec_vs_energy():
-    def energy_to_inf(n_rec, print_graph=False):
-        data = []
-        with open(f'data/good_data_per_iteration/{n_rec}_data.txt', 'r') as f:
-            for line in f.readlines():
-                if line[-1] == '\n': line = line[:-1] 
-                n, rec, e1, error_flag = line.split()
-                data.append((int(n), int(rec), float(e1), int(error_flag)))
+def energy_to_inf(n_rec, print_graph=False):
+    data = []
+    with open(f'data/good_data_per_iteration/{n_rec}_data.txt', 'r') as f:
+        for line in f.readlines():
+            if line[-1] == '\n': line = line[:-1] 
+            n, rec, e1, error_flag = line.split()
+            data.append((int(n), int(rec), float(e1), int(error_flag)))
 
-        if len(data) == 1:
-            # If we have only one sample of this recursive level, we return that value
-            print(f'Value at 0 ({n_rec}):', data[0][2])
-            return data[0][2]
+    if len(data) == 1:
+        # If we have only one sample of this recursive level, we return that value
+        print(f'Value at 0 ({n_rec}):', data[0][2])
+        return data[0][2], 0
 
-        MAX_SAMPLE_NUM = 5
+    MAX_SAMPLE_NUM = 5
 
-        X = [1/x for (x, _, _, _) in data[-MAX_SAMPLE_NUM:]]        
-        Y = [y for (_, _, y, _) in data[-MAX_SAMPLE_NUM:]]        
+    X = [1/x for (x, _, _, _) in data[-MAX_SAMPLE_NUM:]]        
+    Y = [y for (_, _, y, _) in data[-MAX_SAMPLE_NUM:]]        
 
-        recta = np.poly1d(np.polyfit(X, Y, 2))
-        value_at_zero = recta(0)
-        print(f'Value at 0 ({n_rec}):', value_at_zero)
+    recta = np.poly1d(np.polyfit(X, Y, 1))
+    value_at_zero = recta(0)
+    print(f'Value at 0 ({n_rec}):', value_at_zero)
 
-        if print_graph:
-            X_pred = np.arange(0, max(X) + 0.001, 0.0001)
-            Y_pred = recta(X_pred)
+    if print_graph:
+        X_pred = np.arange(0, max(X) + 0.001, 0.0001)
+        Y_pred = recta(X_pred)
 
-            plt.title(f'Getting energy when N --> inf with rec = {n_rec}')
-            # plt.xscale("log")
-            
-            plt.plot(X, Y, 'x', color="black")
-            plt.plot(X_pred, Y_pred, '--', label=n_rec)
-            plt.show()
+        plt.title(f'Getting energy when N --> inf with rec = {n_rec}')
+        # plt.xscale("log")
+        
+        plt.plot(X, Y, 'x', color="black")
+        plt.plot(X_pred, Y_pred, '--', label=n_rec)
+        plt.show()
 
-        return value_at_zero
+    error = value_at_zero - data[-1][2]
+
+    return value_at_zero, error 
 
     # --------------------------------------------------------------------------------------    
 
+
+def rec_vs_energy():
     energies = []
     rec_iter = []
+    errors = []
     for i in range(1,9):
-        e = energy_to_inf(i, print_graph=False)
-        energies.append(e)
+        en, err = energy_to_inf(i, print_graph=True)
+        energies.append(en)
+        errors.append(err)
         rec_iter.append(i)
 
 
-    def func(x, b, c):
-        return b * np.exp(x*c) 
+    def func(x, a, b):
+        return b * np.sinh(x*a) 
 
-    popt, pcov = curve_fit(func, rec_iter[0:5], energies[0:5])
-    X_pred = np.arange(0, 8.001, 0.0001)
+    popt, pcov = curve_fit(func, rec_iter[0:5], energies[0:5], maxfev=10000)
+    X_pred = np.arange(1, rec_iter[-1], 0.0001)
     Y_pred = func(X_pred, *popt)
     
     params = list(map(lambda x: round(x,4), popt))
@@ -62,11 +70,11 @@ def rec_vs_energy():
     print(f'y = {params[0]} * exp({params[1]}*x)')
     
     plt.plot(X_pred, Y_pred, '--', label="Aproximation")
-    plt.plot(rec_iter[0:5], energies[0:5], 'x')
-    plt.plot(rec_iter[5:], energies[5:], 'x')
+    # plt.plot(rec_iter[0:5], energies[0:5], 'x')
+    plt.errorbar(rec_iter[0:5], energies[0:5], yerr=errors[0:5], fmt='.',capsize=2)
+    # plt.plot(rec_iter[5:], energies[5:], 'x')
+    plt.errorbar(rec_iter[5:], energies[5:], yerr=errors[5:], fmt='.',capsize=2)
 
-    
-    
     X_upper_bound = list(range(9))
     Y_upper_bound = [np.pi**2 * 9**i for i in range(9)]
     plt.plot(X_upper_bound, Y_upper_bound, label="upper bound")
@@ -74,6 +82,8 @@ def rec_vs_energy():
     # plt.xscale("log")
     plt.yscale("log")
     plt.title("Ground energy vs recursion iteration of the fractal")
+    plt.xlabel("Iteration of the fractal")
+    plt.ylabel("Energy")
     plt.legend()
     plt.show()
 
@@ -110,12 +120,17 @@ def execution_time():
 
 def IPR_states():
     def read_data(filename):
-        data = []
+        states = []
+        energies = []
+        IPRs = []
         with open(filename, 'r') as f:
             for line in f.readlines():
                 state, energy, IPR = line[:-1].split()
-                data.append((int(state), float(energy), float(IPR)))
-        return data
+                states.append(int(state)) 
+                energies.append(float(energy)) 
+                IPRs.append(float(IPR))
+
+        return states, energies, IPRs 
 
     def normalize(l):
         l_max = max(l)
@@ -123,42 +138,29 @@ def IPR_states():
         return list(map(lambda x: (x - l_min)/(l_max - l_min), l))
 
 
-    data_rec2 = read_data('data/IPR_data/IPR_data_rec2')
-    data_rec3 = read_data('data/IPR_data/IPR_data_rec3')
-    data_rec4 = read_data('data/IPR_data/IPR_data_rec4')
-    data_rec5 = read_data('data/IPR_data/IPR_data_rec5_243')
+    X0, Y0, Z0 = read_data('data/IPR_data/IPR_data_rec0_243')
+    X1, Y1, Z1 = read_data('data/IPR_data/IPR_data_rec1_243')
+    X2, Y2, Z2 = read_data('data/IPR_data/IPR_data_rec2_243')
+    X3, Y3, Z3 = read_data('data/IPR_data/IPR_data_rec3_243')
+    X4, Y4, Z4 = read_data('data/IPR_data/IPR_data_rec4_243')
+    X5, Y5, Z5 = read_data('data/IPR_data/IPR_data_rec5_243')
 
-    X_r2 = [x for (x, _, _) in data_rec2]
-    Y_r2 = ([y for (_, y, _) in data_rec2])
-    Z_r2 = ([z for (_, _, z) in data_rec2])
-
-    X_r3 = [x for (x, _, _) in data_rec3]
-    Y_r3 = ([y for (_, y, _) in data_rec3])
-    Z_r3 = ([z for (_, _, z) in data_rec3])
-   
-    X_r4 = [x for (x, _, _) in data_rec4]
-    Y_r4 = ([y for (_, y, _) in data_rec4])
-    Z_r4 = ([z for (_, _, z) in data_rec4])
-   
-    X_r5 = [x for (x, _, _) in data_rec5]
-    Y_r5 = ([y for (_, y, _) in data_rec5])
-    Z_r5 = ([z for (_, _, z) in data_rec5])
-   
-    # Y_norm = list(map(lambda x: (x - min(Y))/(max(Y) - min(Y)), Y))
-    # Z_norm = list(map(lambda x: (x - min(Z))/(max(Z) - min(Z)), Z))
-   
-    plt.plot(X_r2, Y_r2, '--', label='rec 2')
-    plt.plot(X_r2, Y_r2, 'x', label='rec 2')
-    plt.plot(X_r3, Y_r3, '--', label='rec 3')
-    plt.plot(X_r3, Y_r3, 'x', label='rec 3')
-    plt.plot(X_r4, Y_r4, '--', label='rec 4')
-    plt.plot(X_r4, Y_r4, 'x', label='rec 4')
-
-    # plt.plot(X_r5, Y_r5, '--', label='rec 5')
-    # plt.plot(X_r5, Y_r5, 'x', label='rec 5')
-    # plt.plot(X_r5, Z_r5, '-', label='rec 5')
+    # plt.plot(X0, Y0, 'x', label='iteration 0')
+    plt.plot(Y0, Z0, 'x', label='iteration 0')
+    # # plt.plot(X1, Y1, 'x', label='iteration 1')
+    plt.plot(Y1, Z1, 'x', label='iteration 1')
+    # # plt.plot(X2, Y2, 'x', label='iteration 2')
+    plt.plot(Y2, Z2, 'x', label='iteration 2')
+    # plt.plot(X3, Y3, 'x', label='iteration 3')
+    plt.plot(Y3, Z3, 'x', label='iteration 3')
+    # plt.plot(X4, Y4, 'x', label='iteration 4')
+    plt.plot(Y4, Z4, 'x', label='iteration 4')
+    plt.plot(Y5, Z5, 'x', label='iteration 5')
     
-    # plt.plot(X, Z, 'x')
+    plt.xlabel("Energy")
+    plt.ylabel("IPR")
+    plt.yscale("log")
+    plt.title("Energy of the different eigenstates")
     plt.legend()
     plt.show()
 
@@ -202,6 +204,8 @@ def random_walks():
     data = []
     files = os.listdir('data/random_walks')
 
+    diff_coefficients = []
+
     for f in [x for x in files if x.startswith('distances')]:
         with open('data/random_walks/' + f) as f:
             params = f.readline()
@@ -216,15 +220,29 @@ def random_walks():
         recta = np.poly1d(np.polyfit(X, values, 1))
         X_pred = np.arange(0, max(X), max(X)/100)
         Y_pred = recta(X_pred)
-        print(rec_lvl, recta)
-        plt.plot(X_pred, Y_pred, label=f"Distances rec_lvl={rec_lvl}")
+        print(f'Ajuste para rec_lvl {int(rec_lvl)}:')
+        print(recta)
+        diff_coefficients.append(recta[1])
+        # plt.plot(X_pred, Y_pred, '--',label=f"Ajuste lineal rec_lvl={rec_lvl}")
+        plt.plot(X, values, label=f"Real values rec_lvl={rec_lvl}")
+        # plt.xscale("log")
+        # plt.yscale("log")
     plt.legend()
+    plt.title('Random walks')
+    plt.xlabel('Time')
+    plt.ylabel('Distance')
     plt.show()
 
+    plt.plot(list(range(9)), [2] + diff_coefficients, 'x')
+    plt.title('Diffusion coeficients')
+    plt.xlabel('Iteration of fractal')
+    plt.ylabel('Diffusion coefficient')
+    plt.show()
 
 if __name__ == "__main__":
     # execution_time()
-    # IPR_states()
-    rec_vs_energy()
+    IPR_states()
+    # rec_vs_energy()
+    # energy_to_inf(6, print_graph=True)
     # min_size_energy_vs_rec()
     # random_walks()
