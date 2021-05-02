@@ -1,14 +1,19 @@
 %Schrodinger2D.m
 disp('Starting program');
 N = 3^4;
-Neig = 3^4; % number of eigenvalues to be found
+Neig = 5; % number of eigenvalues to be found
 Rmax = 0.5;
-recursion_level = 0;
+recursion_level = 4;
+PBC = true;
+
+if PBC
+  N = N - 1;
+end
 
 dx = (Rmax*2)/N;  
 x = linspace(-Rmax + dx/2, Rmax - dx/2, N);   % one-dimensional space lattice
 [Xmat, Ymat] = meshgrid(x, x);  % two-dimensional space lattice
-              % lattice spacing
+                                % lattice spacing
 h = dx;
 X = Xmat(:); Y = Ymat(:);       % all elements of array as a single column
 
@@ -17,8 +22,10 @@ e = ones(N,1);
 L = spdiags([e -2*e e], -1:1, N, N);
 
 % Periodic boundary conditions 
-%L(N,1) = 1;
-%L(1, N) = 1;
+if PBC
+  L(N,1) = 1;
+  L(1, N) = 1;
+end
 
 L = L / h^2; % 1D finite difference Laplacian
 
@@ -30,15 +37,18 @@ L2 = kron(L, I) + kron(I, L);
 % ------ Potencial harmonico ------
 %Vext = 0.5*X.^2 + 0.5*Y.^2;
 
-
 % --------- Sierpinski Carpet ---------
-%%{
-Vext_mat = sierpinski(N, recursion_level, true);
-% Vext_mat = zeros(N, N);
-%imshow(Vext_mat);
+if PBC
+  Vext_mat = sierpinski(N + 1, recursion_level, true);
+  Vext_mat = Vext_mat(1:N, 1:N);
+else
+  Vext_mat = sierpinski(N, recursion_level, true);
+end
+
+noise = ((rand(N^2, 1) - 0.5) * 0);
+Vext = Vext_mat(:) + noise;
+%imagesc(reshape(Vext, [N, N]));
 %pause;
-Vext = Vext_mat(:);
-%%}
 % -------------------------------------
 
 Hkin = -0.5 * L2;
@@ -46,11 +56,6 @@ Hext = spdiags(Vext, 0, N^2, N^2);
 H = Hkin + Hext;  % Hamiltonian
 
 display('Finding eigenvalues...');
-
-% opt.p = 100;
-%sigma = 'si'; 
-% sigma = 'sa';
-%[PSI,E] = eigs(H, Neig, sigma, opt);      % Smallest eigenvalue of H
 
 precision = 1e-2;
 tic
@@ -70,16 +75,17 @@ for i=1:length(diag(E))
   PSI_2 = PSI_2 / sign(sum(sum(PSI_2)));
   PSI_2 = PSI_2 / dx;
   
-  
   IPR = sum(sum(sum(PSI_2.^4))*dx^2);
   disp(['IPR: ' num2str(IPR)]);
   data_to_save = [num2str(i-1) ' ' num2str(E(i), 5) ' ' num2str(IPR)];
+  
   % save_to_file('data/IPR_data/IPR_data_rec1', data_to_save);
-  % h = pcolor(x,x,PSI_2.^2);
-  % daspect([1 1 1]);
-  % colorbar; 
-  % set(h, 'EdgeColor', 'none');
-  % pause;
+  
+  h = pcolor(x,x,PSI_2.^2);
+  daspect([1 1 1]);
+  colorbar; 
+  set(h, 'EdgeColor', 'none');
+  pause;
   
   if IPR > max_IPR
     max_IPR = IPR;
@@ -97,15 +103,15 @@ end
 % ------------------------------------------------------
 % Display State with max IPR 
 disp(['State with max IPR: ' num2str(max_IPR)]);
-imagesc(max_IPR_wavefun.^2); 
-colorbar; 
-pause;
+%imagesc(max_IPR_wavefun.^2); 
+%colorbar; 
+%pause;
 
 % Display State with min IPR 
 disp(['State with min IPR: ' num2str(min_IPR)]);
-imagesc(min_IPR_wavefun.^2); 
-colorbar; 
-pause;
+%imagesc(min_IPR_wavefun.^2); 
+%colorbar; 
+%pause;
 % ------------------------------------------------------
 
 PSI_0 = PSI(:, 1);
