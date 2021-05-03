@@ -54,14 +54,16 @@ def rec_vs_energy():
     rec_iter = []
     errors = []
     for i in range(1,9):
-        en, err = energy_to_inf(i, print_graph=True)
-        energies.append(en)
+        en, err = energy_to_inf(i, print_graph=False)
+        Lmin = 1 / (3**i)
+        en_inc = en / (1 / (Lmin**2))
+        energies.append(en_inc)
         errors.append(err)
         rec_iter.append(i)
 
 
     def func(x, a, b):
-        return b * np.sinh(x*a) 
+        return b * np.exp(x*a) 
 
     popt, pcov = curve_fit(func, rec_iter[0:5], energies[0:5], maxfev=10000)
     X_pred = np.arange(1, rec_iter[-1], 0.0001)
@@ -72,17 +74,17 @@ def rec_vs_energy():
     print(f'y = {params[0]} * exp({params[1]}*x)')
     
     plt.plot(X_pred, Y_pred, '--', label="Aproximation")
-    # plt.plot(rec_iter[0:5], energies[0:5], 'x')
-    plt.errorbar(rec_iter[0:5], energies[0:5], yerr=errors[0:5], fmt='.',capsize=2)
-    # plt.plot(rec_iter[5:], energies[5:], 'x')
-    plt.errorbar(rec_iter[5:], energies[5:], yerr=errors[5:], fmt='.',capsize=2)
+    plt.plot(rec_iter[0:5], energies[0:5], 'x')
+    # plt.errorbar(rec_iter[0:5], energies[0:5], yerr=errors[0:5], fmt='.',capsize=2)
+    plt.plot(rec_iter[5:], energies[5:], 'x')
+    # plt.errorbar(rec_iter[5:], energies[5:], yerr=errors[5:], fmt='.',capsize=2)
 
     X_upper_bound = list(range(9))
     Y_upper_bound = [np.pi**2 * 9**i for i in range(9)]
-    plt.plot(X_upper_bound, Y_upper_bound, label="upper bound")
+    # plt.plot(X_upper_bound, Y_upper_bound, label="upper bound")
 
     # plt.xscale("log")
-    plt.yscale("log")
+    # plt.yscale("log")
     plt.title("Ground energy vs recursion iteration of the fractal")
     plt.xlabel("Iteration of the fractal")
     plt.ylabel("Energy")
@@ -147,12 +149,12 @@ def IPR_states():
     X4, Y4, Z4 = read_data('data/IPR_data/IPR_data_rec4_243')
     X5, Y5, Z5 = read_data('data/IPR_data/IPR_data_rec5_243')
 
-    # plt.plot(Y0, Z0, 'x', label='iteration 0')
-    # plt.plot(Y1, Z1, 'x', label='iteration 1')
-    # plt.plot(Y2, Z2, 'x', label='iteration 2')
-    # plt.plot(Y3, Z3, 'x', label='iteration 3')
-    # plt.plot(Y4, Z4, 'x', label='iteration 4')
-    # plt.plot(Y5, Z5, 'x', label='iteration 5')
+    plt.plot(Y0, Z0, 'x', label='iteration 0')
+    plt.plot(Y1, Z1, 'x', label='iteration 1')
+    plt.plot(Y2, Z2, 'x', label='iteration 2')
+    plt.plot(Y3, Z3, 'x', label='iteration 3')
+    plt.plot(Y4, Z4, 'x', label='iteration 4')
+    plt.plot(Y5, Z5, 'x', label='iteration 5')
 
     # plt.plot(X0, Z0, '--', label='iteration 0')
     # plt.plot(X1, Z1, '--', label='iteration 1')
@@ -161,12 +163,12 @@ def IPR_states():
     # plt.plot(X4, Z4, '--', label='iteration 4')
     # plt.plot(X5, Z5, '--', label='iteration 5')
 
-    # plt.plot(X0, Y0 / (DIMENSION**0), 'x', label='iteration 0')
-    # plt.plot(X1, Y1 / (DIMENSION**1), 'x', label='iteration 1')
-    # plt.plot(X2, Y2 / (DIMENSION**2), 'x', label='iteration 2')
-    # plt.plot(X3, Y3 / (DIMENSION**3), 'x', label='iteration 3')
-    # plt.plot(X4, Y4 / (DIMENSION**4), 'x', label='iteration 4')
-    # plt.plot(X5, Y5 / (DIMENSION**5), 'x', label='iteration 5')
+    # plt.plot(X0, Y0, 'x', label='iteration 0')
+    # plt.plot(X1, Y1, 'x', label='iteration 1')
+    # plt.plot(X2, Y2, 'x', label='iteration 2')
+    # plt.plot(X3, Y3, 'x', label='iteration 3')
+    # plt.plot(X4, Y4, 'x', label='iteration 4')
+    # plt.plot(X5, Y5, 'x', label='iteration 5')
 
     plt.xlabel("Energy")
     plt.ylabel("IPR")
@@ -252,8 +254,8 @@ def random_walks():
 
 if __name__ == "__main__":
     # execution_time()
-    IPR_states()
-    # rec_vs_energy()
+    # IPR_states()
+    rec_vs_energy()
     # energy_to_inf(6, print_graph=True)
     # min_size_energy_vs_rec()
     # random_walks()
