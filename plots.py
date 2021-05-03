@@ -7,6 +7,8 @@ from collections import defaultdict
 import os
 import matplotlib
 
+DIMENSION = np.log(8) / np.log(3)
+
 def energy_to_inf(n_rec, print_graph=False):
     data = []
     with open(f'data/good_data_per_iteration/{n_rec}_data.txt', 'r') as f:
@@ -125,12 +127,12 @@ def IPR_states():
         IPRs = []
         with open(filename, 'r') as f:
             for line in f.readlines():
-                state, energy, IPR = line[:-1].split()
+                state, energy, IPR = line[:-1].split(',')
                 states.append(int(state)) 
                 energies.append(float(energy)) 
                 IPRs.append(float(IPR))
 
-        return states, energies, IPRs 
+        return np.array(states), np.array(energies), np.array(IPRs) 
 
     def normalize(l):
         l_max = max(l)
@@ -145,21 +147,30 @@ def IPR_states():
     X4, Y4, Z4 = read_data('data/IPR_data/IPR_data_rec4_243')
     X5, Y5, Z5 = read_data('data/IPR_data/IPR_data_rec5_243')
 
-    # plt.plot(X0, Y0, 'x', label='iteration 0')
-    plt.plot(Y0, Z0, 'x', label='iteration 0')
-    # # plt.plot(X1, Y1, 'x', label='iteration 1')
-    plt.plot(Y1, Z1, 'x', label='iteration 1')
-    # # plt.plot(X2, Y2, 'x', label='iteration 2')
-    plt.plot(Y2, Z2, 'x', label='iteration 2')
-    # plt.plot(X3, Y3, 'x', label='iteration 3')
-    plt.plot(Y3, Z3, 'x', label='iteration 3')
-    # plt.plot(X4, Y4, 'x', label='iteration 4')
-    plt.plot(Y4, Z4, 'x', label='iteration 4')
-    plt.plot(Y5, Z5, 'x', label='iteration 5')
-    
+    # plt.plot(Y0, Z0, 'x', label='iteration 0')
+    # plt.plot(Y1, Z1, 'x', label='iteration 1')
+    # plt.plot(Y2, Z2, 'x', label='iteration 2')
+    # plt.plot(Y3, Z3, 'x', label='iteration 3')
+    # plt.plot(Y4, Z4, 'x', label='iteration 4')
+    # plt.plot(Y5, Z5, 'x', label='iteration 5')
+
+    # plt.plot(X0, Z0, '--', label='iteration 0')
+    # plt.plot(X1, Z1, '--', label='iteration 1')
+    # plt.plot(X2, Z2, '--', label='iteration 2')
+    # plt.plot(X3, Z3, '--', label='iteration 3')
+    # plt.plot(X4, Z4, '--', label='iteration 4')
+    # plt.plot(X5, Z5, '--', label='iteration 5')
+
+    # plt.plot(X0, Y0 / (DIMENSION**0), 'x', label='iteration 0')
+    # plt.plot(X1, Y1 / (DIMENSION**1), 'x', label='iteration 1')
+    # plt.plot(X2, Y2 / (DIMENSION**2), 'x', label='iteration 2')
+    # plt.plot(X3, Y3 / (DIMENSION**3), 'x', label='iteration 3')
+    # plt.plot(X4, Y4 / (DIMENSION**4), 'x', label='iteration 4')
+    # plt.plot(X5, Y5 / (DIMENSION**5), 'x', label='iteration 5')
+
     plt.xlabel("Energy")
     plt.ylabel("IPR")
-    plt.yscale("log")
+    # plt.yscale("log")
     plt.title("Energy of the different eigenstates")
     plt.legend()
     plt.show()

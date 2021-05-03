@@ -1,10 +1,14 @@
 %Schrodinger2D.m
 disp('Starting program');
+
+% --- Parameters ------------------------------
 N = 3^4;
-Neig = 5; % number of eigenvalues to be found
-Rmax = 0.5;
-recursion_level = 4;
+Neig = 1; % number of eigenvalues to be found
+recursion_level = 3;
+Rmax = (3^(recursion_level - 1)) / 2;
 PBC = true;
+% ---------------------------------------------
+
 
 if PBC
   N = N - 1;
@@ -13,7 +17,6 @@ end
 dx = (Rmax*2)/N;  
 x = linspace(-Rmax + dx/2, Rmax - dx/2, N);   % one-dimensional space lattice
 [Xmat, Ymat] = meshgrid(x, x);  % two-dimensional space lattice
-                                % lattice spacing
 h = dx;
 X = Xmat(:); Y = Ymat(:);       % all elements of array as a single column
 
