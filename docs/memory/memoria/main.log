@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.4)  12 MAY 2021 19:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.4)  12 MAY 2021 20:11
 entering extended mode
 **c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.tex
 (c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.tex
@@ -222,7 +222,20 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count288
 \l__pdf_internal_box=\box50
-) (main.aux)
+) (main.aux
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
@@ -279,7 +292,7 @@ LaTeX Info: Redefining \nameref on input line 14.
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-<./logo-fib.png, id=47, 1003.75pt x 150.5625pt>
+<./logo-fib.png, id=90, 1003.75pt x 150.5625pt>
 File: ./logo-fib.png Graphic file (type png)
 <use ./logo-fib.png>
 Package pdftex.def Info: ./logo-fib.png  used on input line 26.
@@ -354,12 +367,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 115--116
 
  []
 
-<./cantor.png, id=88, 427.05pt x 69.3135pt>
+<./cantor.png, id=142, 427.05pt x 69.3135pt>
 File: ./cantor.png Graphic file (type png)
 <use ./cantor.png>
 Package pdftex.def Info: ./cantor.png  used on input line 120.
 (pdftex.def)             Requested size: 345.0pt x 55.99767pt.
-<./sierpinski.png, id=89, 568.37344pt x 567.62062pt>
+<./sierpinski.png, id=143, 568.37344pt x 567.62062pt>
 File: ./sierpinski.png Graphic file (type png)
 <use ./sierpinski.png>
 Package pdftex.def Info: ./sierpinski.png  used on input line 130.
@@ -371,9 +384,6 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 Underfull \hbox (badness 10000) in paragraph at lines 136--142
 
  []
-
-
-LaTeX Warning: Citation `boseeinstein' on page 4 undefined on input line 143.
 
 [4 <./cantor.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 153--159
@@ -390,25 +400,86 @@ Underfull \hbox (badness 10000) in paragraph at lines 168--172
 
  []
 
-[6] [7] (main.aux)
+[6] [7] [8] [9]
+Underfull \hbox (badness 2573) in paragraph at lines 250--252
+[]\OT1/cmr/m/n/10 Solving Hy-dro-gen atom nu-mer-i-cally with 14 lines of Mat-lab code
+ []
 
-LaTeX Warning: There were undefined references.
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--258
+[]\OT1/cmr/m/n/10 FIB-UPC, \Nor-ma-tiva del tre-ball fi-nal de grau del grau en
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--258
+\OT1/cmr/m/n/10 en-giny-e-ria in-formatica de la FIB," 2012. [On-line]. Avali-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--258
+\OT1/cmr/m/n/10 https://www.fib.upc.edu/sites/fib/files/documents/actes/normativatfg-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--260
+[]\OT1/cmr/m/n/10 Taules re-tribu-tives del per-sonal do-cent i in-ves-ti-gador lab-o-ral
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--260
+\OT1/cmr/m/n/10 Any 2020 [https://www.upc.edu/transparencia/ca/informacio-de-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--262
+[]\OT1/cmr/m/n/10 Normativa del tre-ball fi-nal de grau del grau en En-giny-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--262
+\OT1/cmr/m/n/10 e-ria In-formatica de la Fac-ul-tat d'Informatica de Barcelona
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--262
+\OT1/cmr/m/n/10 [https://www.fib.upc.edu/sites/fib/files/documents/estudis/normativa-
+ []
+
+[10pdfTeX warning (ext4): destination with the same identifier (name{cite.}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.273 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier (name{cite.}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.273 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier (name{cite.}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.273 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier (name{cite.}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.273 \end{document}
+                    ] (main.aux)
+
+LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 8A069C7940162F55B4D209E1032070AB;1336.
+(rerunfilecheck)             Checksum: 522C83813537124A77D2AA627AFAF74C;3178.
  ) 
 Here is how much of TeX's memory you used:
- 8945 strings out of 479321
- 134181 string characters out of 2855153
- 440624 words of memory out of 3000000
- 26263 multiletter control sequences out of 15000+600000
- 405554 words of font info for 34 fonts, out of 8000000 for 9000
+ 8985 strings out of 479321
+ 134617 string characters out of 2855153
+ 440860 words of memory out of 3000000
+ 26284 multiletter control sequences out of 15000+600000
+ 405889 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,7n,74p,1252b,370s stack positions out of 5000i,500n,10000p,200000b,80000s
-<C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on c:/Users\CONVIDAT\Desktop\personal\TFG\docs\memory\memoria\main.pdf (8 pages, 156557 bytes).
+ 71i,7n,74p,1252b,375s stack positions out of 5000i,500n,10000p,200000b,80000s
+ <C:\Users\CONVIDAT\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on c:/Users\CONVIDAT\Desktop\personal\TFG\docs\memory\memoria\main.pdf (11 pages, 177805 bytes).
 PDF statistics:
- 148 PDF objects out of 1000 (max. 8388607)
- 31 named destinations out of 1000 (max. 500000)
- 104 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 230 PDF objects out of 1000 (max. 8388607)
+ 49 named destinations out of 1000 (max. 500000)
+ 192 words of extra memory for PDF output out of 10000 (max. 10000000)
 

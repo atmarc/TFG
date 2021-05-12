@@ -9,3 +9,14 @@
 \contentsline {section}{\numberline {2}Justification}{5}{section.2}%
 \contentsline {section}{\numberline {3}Objectives}{6}{section.3}%
 \contentsline {section}{\numberline {4}Scope}{6}{section.4}%
+\contentsline {section}{\numberline {5}Potential obstacles and risks}{7}{section.5}%
+\contentsline {section}{\numberline {6}How the project will be developed}{7}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Methodology and rigour}{7}{subsection.6.1}%
+\contentsline {section}{\numberline {7}Project phases}{7}{section.7}%
+\contentsline {section}{\numberline {8}Sustainability}{7}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Reflection}{7}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Economic dimension}{7}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Social dimension}{7}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Ambiental dimension}{8}{subsection.8.4}%
+\contentsline {section}{\numberline {9}Solving Schrödinger equation with fractal external potential}{9}{section.9}%
+\contentsline {section}{References}{10}{section.9}%
