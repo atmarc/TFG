@@ -21,10 +21,10 @@ float L = 1;
 float Rmax = L / 2.0;
 float N = pow(3, rec_lvl);
 float tam_min = L / pow(3, rec_lvl); 
-float dt = pow(tam_min / 10, 2);
-float sqrt_dt = sqrt(dt);
+float sqrt_dt = tam_min / 10;
+float dt = sqrt_dt * sqrt_dt;
 
-float default_filename = false;
+float default_filename = true;
 string data_folder = ".";
 vector<vector<int>> grid;
 
@@ -217,8 +217,8 @@ int main(int argc, char* argv[]) {
         // Compute new global variables        
         N = pow(3, rec_lvl);
         tam_min = L / pow(3, rec_lvl); 
-        dt = pow(tam_min / 100, 2);
-        sqrt_dt = sqrt(dt);
+        sqrt_dt = tam_min / 100;
+        dt = sqrt_dt * sqrt_dt;
     }
 
     data_size = data_size > iterations ? iterations : data_size;
