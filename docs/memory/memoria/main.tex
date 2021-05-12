@@ -1,0 +1,216 @@
+\documentclass{article}
+\usepackage{blindtext}
+\usepackage{titlesec}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+
+\usepackage{sectsty}
+
+\usepackage{hyperref}
+
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        \Huge
+        \textbf{Quantum particles in fractal external potential}
+
+        \vspace{0.5cm}
+        \Large
+        Memory of the project
+        \vfill
+        \begin{figure}[h!]
+            \includegraphics[width=\textwidth]{./logo-fib.png}
+        \end{figure}
+        \textbf{Marc Amorós}\\
+        \vspace{0.5cm}
+        \textbf{Thesis supervisor: Grigori Astrakharchik}\\
+        \vspace{0.5cm}
+
+   \end{center}
+\end{titlepage}
+
+\tableofcontents
+\break
+
+\section{Context}
+
+\subsection{Introduction}
+The investigation world is always closely related to computer science. It is very frequent 
+to solve a problem by modelling it on a computer using a certain programming language, and 
+then making simulations to get a solution.\\
+
+The physics investigation field highly benefits of this problem-solving approaches, as we 
+find plenty of equations with physical meaning without an exact solution. To fix this, we 
+try to solve them by representing these equations in a discrete and finite space, so our computers 
+can handle it, and then we write algorithms to get approximations of a real solution.\\
+
+This is an interdisciplinary research project, with an important theoretical part that involves 
+some quantum physics knowledge and a practical part that covers the design and development of 
+algorithms to simulate and solve quantum physics systems.\\
+
+\subsection{Stakeholders}
+It is important to define the stakeholders of any project, to know who is interested of its 
+development and can benefit from it.\\
+
+The main stakeholder of this project is UPC physics department, and more concretely Grigori 
+Astrakharchikm, who was the impeller of it, by posting a TFG offer on Racó. This can lead to 
+a scientific publication if interesting results are obtained, that is why it can interest him 
+as a researcher.\\
+
+As every scientific research project, it increases the knowledge on this field in general. If 
+we write a paper about the steps we followed it can be beneficial for any other researcher of 
+quantum particle systems and their unique properties, even they could try to replicate our 
+results by real experimentation. So it can be considered that this project benefits all the 
+scientific community in a way, more specifically the physics investigators.  
+
+
+\subsection{Theoretical concepts}
+I will summarize some theoretical concepts that are necessary to understand the rest of this 
+document, so the reader can fully comprehend the aim and objectives of this project.
+
+\subsubsection{Quantum mechanics}
+Quantum mechanics is the theory that describes the physical properties of Nature at the scale 
+of atoms and subatomic particles. When it was first formulated during the early decades of the 
+20th century, it introduced some ground-breaking concepts, such as energy quantization, the 
+uncertainty of position and momentum of a particle and the wave-particle duality of matter.\\
+
+In classical physics we have Newton’s second law, which given a set of initial conditions 
+makes a mathematical prediction of what path a given physical system will take over time. 
+Its quantum analogous would be the Schrödinger equation, which instead requires a statistical 
+interpretation.
+
+\subsubsection{Schrödinger equation}
+Quantum mechanics tells us how the particles behave over time. This description is done using 
+the Schrödinger equation, which provides the time evolution of the wavefunction of particles.
+The wavefunction, generally represented with the letter $\Psi$, is a mathematical 
+description of the quantum state of the system, and with it, you can obtain the distribution
+of probability of the measurements that you can do over this system.\\
+
+The Schrödinger equation is a differential equation, and has the following form:
+
+
+\begin{equation}
+i\hbar\frac{\partial}{\partial t}\Psi\left(r,t\right)=\hat{H}\Psi\left(r,t\right)
+\end{equation}
+Here we define the Hamiltonian operator $\hat{H}$, which is an operator corresponding to the total energy of that system, including both kinetic ($T$) and potential energy ($V$), and for a single particle it takes the form:
+\begin{equation}
+\hat{H}=\hat{T}+\hat{V}=-\frac{\hbar^2}{2m}\nabla^2+V\left(r,t\right)
+\end{equation}
+The kinetic energy in quantum mechanics is proportional to the Laplace operator $\nabla^2$, which is the addition of the second partial derivatives of the wavefunction. The potential energy is a function of the position of the particle, similarly to the classical case.\\
+
+We are interested in the stationary properties, so we take the time-independent version of the Schrödinger equation:
+\begin{equation}
+\hat {H} |\Psi \rangle = E |\Psi \rangle
+\end{equation}
+When solving it, the set of energy eigenvalues that provides (also called energy spectrum) is the set of possible energies obtained when measuring the system’s total energy. Here we are interested in finding the ground state of the system, which is its lowest energy state. Differently from the classical systems where the energy of a single particle at zero temperature is finite due to zero-point motion, this ground state energy is always present in the quantum system, even in absolute zero temperature conditions. 
+
+\subsubsection{Fractals}
+A fractal is a subset of the Euclidean space that illustrates a property called self-similarity, which means that appears the same at different scales and exhibits similar patterns at increasingly smaller scales. 
+
+\subsubsection{Sierpiński carpet}
+The Sierpiński carpet is a plane fractal that was first described by Wacław Sierpiński in 1916, as a two dimensions generalization of the Cantor set, that was discovered in 1874 by Henry John Stephen Smith and introduced by German mathematician Georg Cantor in 1883.\\
+
+The Cantor ternary set is created by iteratively deleting the open middle third from a set of line segments.
+
+\begin{figure}[h]
+    \includegraphics[width=\textwidth]{./cantor.png}
+    \caption{First six steps of Cantor ternary set}
+\end{figure}
+
+To describe fractals properties we frequently use the fractal dimension, which is a ratio that 
+provides a statistical index that shows how the detail in the pattern of the fractal changes
+with every iteration. These leaves us with non integer dimensions, as the dimension of the 
+Sierpiński carpet is $ log(8)/log(3)\approx 1,8927...$
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{./sierpinski.png}
+    \caption{Sierpiński carpet with 5 levels of recursion}
+\end{figure}
+\vfill
+
+\section{Justification}
+The interdisciplinary aspect of this project is what attracts me the most. Quantum mechanics
+is a complicated field that we do not study on the GEI degree. That is why this project 
+really interested me personally, as it gives me the opportunity to learn and work on a 
+subject that is quite different to what I am used to, and I am also able to contribute 
+on a physics research project applying my computation knowledge, something I would enjoy
+doing as a future job.\\
+
+There have been recent experiments \cite{boseeinstein} that have shown how it is possible 
+to produce a Bose-Einstein condensate. In the last few years, new experimental techniques 
+have been developed, and it became feasible to create two-dimensional Fermi or Bose gas 
+in highly controllable external potential. The projected potential can be chosen essentially 
+in any desired shape, fractal shapes included. These means that most of our work could be 
+verified by these experiments. Moreover, we could find some related articles that studied
+the properties of particles on a fractal environment, but they did not obtain the energetic, 
+structural and dynamic properties as we do.
+
+\section{Objectives}
+The aim of the project is to study the properties of quantum particles in a fractal external 
+potential. The main goal is to obtain a detailed description of such a system in terms of 
+energetic, structural and dynamic properties. In particular, the energetic properties can 
+be quantified by evaluation of the ground state energy and the excitation spectrum. The 
+structural property of interest is the density profile. The dynamic property to be calculated
+is the diffusion coefficient.\\
+
+We consider the external potential in the shape of a Sierpiński carpet. It has a fractal 
+structure with the fractal dimensionality between 1 (i.e. a line) and 2 (i.e. a plane). 
+The strength of the external potential is considered to be infinite (i.e. hard walls) in 
+the positions where the fractal is present. It means that the particles cannot diffuse 
+freely in the system. At the same time, the phase space is joined, that is the particle is 
+allowed to move between any two points where the external field is absent. The fractal shape 
+is defined in a simple recursive procedure and depends on the recursion level.\\
+
+One of our goals is to provide a detailed description of the properties of quantum particles 
+in fractal external potential. In particular, we plan to verify the existence of a simple 
+scaling law between the recursion number of the zero-point energy of the system and the 
+number of iterations of the fractal.\\
+
+This is an interdisciplinary problem, based on application of mathematical concepts to the 
+field of quantum physics, and relies on the use of numerical methods. This project requires 
+carrying out a scientific investigation and a priori it is not clear which quantum system 
+is going to be the best to study these properties.
+
+\section{Scope}
+We plan to execute this study considering three different problems:
+
+\begin{enumerate}
+    \item Solve Schrödinger equation using exact diagonalization of a discretized Hamiltonian
+    \item Solve the time-dependent Schrödinger equation using the previous method
+    \item Do random walks over the Sierpinski carpet to obtain the diffusion coefficient 
+\end{enumerate}
+
+In this way we cover the major typical experimental conditions. In experiments with ultracold 
+atoms, the atoms obey either Bose-Einstein statistics (bosons) or Fermi-Dirac statistics 
+(fermions). A proper simulation of the properties requires an implementation of different 
+methods used to address the system's properties such as:
+
+\begin{enumerate}
+    \item Exact diagonalization technique, applicable to one particle and many-body system 
+    composed of fermions.
+    \item Random Walk stochastic method, applicable to one particle.
+    \item Gross-Pitaevskii equation, applicable to many-body system composed of bosons.
+\end{enumerate}
+Method 1 allows to obtain energetic and structural properties, while method 2 the structural 
+and dynamic ones. Method 3 can be used to obtain energetic, structural and dynamic properties 
+of the system.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

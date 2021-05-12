@@ -1,0 +1,83 @@
+#!/usr/bin/gnuplot
+set colors classic
+set mxtics
+set mytics
+set style line 12 lc rgb '#ddccdd' lt 1 lw 1.5
+set style line 13 lc rgb '#ddccdd' lt 1 lw 0.5
+set grid xtics mxtics ytics mytics back ls 12, ls 13
+set terminal windows color solid enhanced fontscale 1.5 linewidth 2 font 'CMU Serif Bold Italic' #'CMU Serif Bold, 14'
+set size ratio 2./3.
+set samples 1000
+set encoding utf8
+set fit errorvariables
+set colors classic
+# Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω
+# α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ σς τ υ φ χ ψ ω
+# ħ² Å ∞ ↑ ↓ → ← ± ² ³ ° 
+# perp -> ⟂ parallel ∥ bullet • langle〈 rangle 〉
+
+#set format y "%.0sx10^{%T}"
+#set datafile missing "GNUPLOTSKIP"
+#set datafile missing "NaN"
+#set datafile missing "**"
+#set title "`hostname | sed 's/\..*/:/'``pwd`"
+#dashtype "pattern" # dot (.) hyphen (-) underscore(_) and space.
+
+set xlabel font 'Times New Roman Bold, 14' rotate by 0 "n"
+set ylabel font 'Times New Roman Bold, 14' rotate by 90 "E, (π^2ħ^2 / 2mL^2)"
+set title font 'Times New Roman Bold, 14' rotate by 0
+#set title font 'Times New Roman Italic Bold, 14' rotate by 0
+#set format y "10^{%T}"
+
+L = 1.
+kzbc = pi/L
+Ezbc(nx,ny) = 0.5*kzbc*kzbc*(nx*nx+ny*ny)
+
+set key left
+plot [n=:][:] \
+"IPR_data_rec0_243" u 1:($2/(0.5*kzbc**2)) t "iteration 0" lw 3,\
+1+1       t "1^2+1^2",\
+1+2**2    t "1^2+2^2",\
+2**2+2**2 t "2^2+2^2",\
+3**2+1**2 t "1^2+3^2",\
+3**2+2**2 t "2^2+3^2",\
+4*n/pi lc "black" lt "-" lw 3 t "(4/π) n"
+
+
+
+pause -1
+
+
+"IPR_data_rec1_243" u 1:2 t "n=1",\
+"IPR_data_rec2_243" u 1:2 t "n=2",\
+"IPR_data_rec3_243" u 1:2 t "n=3",\
+"IPR_data_rec4_243" u 1:2 t "n=4",\
+"IPR_data_rec5_243" u 1:2 t "n=5",\
+
+pause -1
+
+f(x) = a*x+b
+set fit errorvariables # add _err to variable to access its error
+fit [x=:][:] f(x) ".dat" u 1:2 via a,b
+replot f(x) title sprintf("a = %.2f ± %.2f, χ² = %f", a, a_err, FIT_WSSR / FIT_NDF)
+
+#save var "par.dat"
+#set print "fit.dat" append
+#print sprintf("%f %f", a, b)
+
+exit
+set terminal pdf color solid enhanced fontscale 1 linewidth 2 font 'CMU Serif Bold, 14' size 8,8
+set output ".pdf"
+replot
+set output
+
+#set terminal postscript enhanced colour
+#set terminal jpeg enhanced size 1600,1200 large
+#set term jpeg font "arial,22"
+#set pointsize 5
+
+set multiplot layout 1,2
+plot [0:][:] "in3Dprev.in" u 1:2 with circles lc rgb "red"  fs transparent solid 0.05 noborder t "(x-y)"
+
+plot [0:][:] "in3Dprev.in" u 2:3 with circles lc rgb "green"  fs transparent solid 0.05 noborder t "(y-z)"
+unset multiplot
