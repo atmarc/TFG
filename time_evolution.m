@@ -3,12 +3,12 @@ disp('Starting program');
 
 % --- Parameters ------------------------------
 N = 3^3;
-Neig = (N^2 + 1)/2; % number of eigenvalues to be found
+Neig = N;%(N^2 + 1)/2; % number of eigenvalues to be found
 recursion_level = 0;
 Rmax = 1 / 2;
 noise_var = 0;
 % Rmax = (3^(recursion_level)) / 2   % --- keep Lmin to 1;
-PBC = false;
+PBC = true;
 % ---------------------------------------------
 
 if PBC
@@ -60,19 +60,21 @@ precision = 1e-2;
 tic
     %[PSI,E,ErrorFlag] = lobpcg(rand(N^2, Neig), H, precision, 10000);
     [PSI,E] = eigs(H, Neig, 'sa');
+    E = diag(E);
 toc
 
-display(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
+%display(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
 
 c = zeros(length(E), 1);
 
-sigma = 0.1;
-x0 = 0.2; y0 = 0.2;
-PSI_init = exp(- (X - x0).^2/sigma.^2 - (Y - y0).^2/sigma.^2);
+sigma = 0.2;
+x0 = 0; y0 = 0;
+k = 10;% impulso
+PSI_init = exp(0.5*(- (X - x0).^2/sigma.^2 - (Y - y0).^2/sigma.^2)) .* exp(sqrt(-1) * k * X);
 %PSI_init = PSI(:, 1);
 
 for i=1:length(E)  
-    disp(['Eigenstate: ' num2str(i-1) ' Energy: ' num2str(E(i, i), 5)]); %display result
+    disp(['Eigenstate: ' num2str(i-1) ' Energy: ' num2str(E(i), 5)]); %display result
     PSI_i = PSI(:, i);
 
     %PSI_i = PSI_i / sqrt(sum(PSI_i.^2)*dx*dx);
@@ -82,26 +84,34 @@ for i=1:length(E)
 end
 
 
-%my_figure = figure;
+my_figure = figure;
 %filename = 'prova.gif';
 
-displacement = zeros(100, 1);
 
-for iter=0:99
+time_values = [0:50] * 0.005;
+displacementX = zeros(1, size(time_values)(2));
+displacementY = zeros(1, size(time_values)(2));
+index = 1;
+for t=time_values
     PSI_t = zeros(N^2, 1);
-    t = iter * 0.0005;
-    disp(['Time: ' num2str(t)]);
     for i=1:length(E)  
-        PSI_t = PSI_t + c(i) * exp(sqrt(-1) * E(i, i) * t) * PSI(:, i);
+        PSI_t = PSI_t + c(i) * exp(sqrt(-1) * E(i) * t) * PSI(:, i);
     end
     
-    xt = sum(x0 * PSI_t.^2 * dx * dx);
-    displacement(iter + 1) = sum((xt - x0).^2 * PSI_t.^2 * dx^2) / sum(PSI_t.^2 * dx^2);
+    PSI_tn = PSI_t / sqrt(sum(abs(PSI_t).^2 * dx^2));
+    
+    %xt = sum(X' * PSI_tn.^2 * dx^2);
+    
+    displacementX(1, index) = sum((X - x0).^2 .* abs(PSI_tn).^2 * dx^2);
+    displacementY(1, index) = sum((Y - y0).^2 .* abs(PSI_tn).^2 * dx^2);
+    index += 1;
+    
+    disp(['Time: ' num2str(t)]);
     
     imagesc(reshape(abs(PSI_t).^2, [N, N]));
-    %pause;
-    drawnow 
+    pause;
     
+    %drawnow 
     % Capture the plot as an image 
     %frame = getframe(my_figure); 
     %im = frame2im(frame); 
@@ -115,4 +125,12 @@ for iter=0:99
     
 end
 
-plot(0:99, displacement);
+disp('Plotting dispacement...');
+
+adjust_t = time_values(1:5);
+
+plot(time_values, displacementX, time_values, displacementY,
+ adjust_t, 0.5 *(sigma^2) + 0.5*(adjust_t.^2)/(sigma^2));
+
+
+

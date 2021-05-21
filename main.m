@@ -1,9 +1,8 @@
 
 function r = main()
-  pot = 1000000;
+  pot = 10000;
   for rec=2
-      for i=[3^3 3^3*2 3^4 3^4*2 3^5 3^5*2 3^6]
-          N = i;
+      for N=[3^3]
           tic
           data = schrodinger_p(N, rec, 0.5, false, pot);
           disp(data);
@@ -16,7 +15,7 @@ end
 
 function r = schrodinger_p(N, rec_lvl, Rmax, PBC, pot)
 disp(['Computing: ' num2str(N) ' ' num2str(rec_lvl)]);
-Neig = 1; % number of eigenvalues to be found
+Neig = (N^2 + 1)/2; % number of eigenvalues to be found
 
 if PBC
   N = N - 1;
@@ -58,12 +57,18 @@ Hkin = -0.5 * L2;
 Hext = spdiags(Vext, 0, N^2, N^2);
 H = Hkin + Hext;  % Hamiltonian
 
-display('Finding eigenvalues...');
+disp('Finding eigenvalues...');
 precision = 1e-4;
 tic
 [PSI,E,ErrorFlag] = lobpcg(rand(N^2, Neig), H, precision, 10000);
 toc
-display(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
+disp(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
+
+disp('Saving matrices...');
+
+save(['data/eigen_mats/vectors_' num2str(N) '_' num2str(rec) '.mat'], 'PSI');
+save(['data/eigen_mats/values_' num2str(N) '_' num2str(rec) '.mat'], 'E');
+
 
 enregy0 = num2str(E);
 r = [num2str(N) ' ' num2str(rec_lvl) ' ' enregy0 ' ' num2str(ErrorFlag)];

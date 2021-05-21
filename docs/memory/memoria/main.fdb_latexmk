@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1620843067 "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.tex" "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.pdf" "main" 1620843073
+["pdflatex"] 1621262801 "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.tex" "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.pdf" "main" 1621262807
   "C:/Users/CONVIDAT/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1620560115 11548 96132bf34cfb2529362324a78081f02e ""
   "C:/Users/CONVIDAT/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1620129142 9526007 669b2f68253c5d58179b8414d9e606b2 ""
   "C:/Users/CONVIDAT/AppData/Local/MiKTeX/pdftex/config/pdftex.map" 1620570719 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
@@ -68,17 +68,17 @@
   "C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/tex/latex/sectsty/sectsty.sty" 1469029225 23038 486d01213a676ac1e07a1ca4f2cb742f ""
   "C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/tex/latex/titlesec/titlesec.sty" 1571243658 48596 2b6a95da931c07a430b1a61904aaa42d ""
   "C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.aux" 1620843073 3872 16cc39372b178bef3d9f319bb69660c9 "pdflatex"
-  "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.tex" 1620843060 15301 fa7d55aadff060749b082333502a6c6b ""
+  "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.aux" 1621262807 3875 bf056f4afd08778478dd82cc52d75884 "pdflatex"
+  "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.tex" 1621262794 16250 32b3612baa28132bf8fb41675f6318f2 ""
   "cantor.png" 1620550888 5129 22aa3b6137ffeeeb932a77582f308976 ""
   "logo-fib.png" 1620550888 43813 be6d926ce9e648294ec97a10e300bb45 ""
-  "main.aux" 1620843073 3872 16cc39372b178bef3d9f319bb69660c9 ""
-  "main.out" 1620843073 3178 522c83813537124a77d2aa627afaf74c ""
-  "main.toc" 1620843073 1767 2ea212d475449ed465e10447f1d14027 ""
+  "main.aux" 1621262807 3875 bf056f4afd08778478dd82cc52d75884 ""
+  "main.out" 1621262807 3181 65bdcca1bffa1a205913d4da7b1fc12c ""
+  "main.toc" 1621262807 1770 e412e9f04e88fe5c4305b30fb0cf4bf7 ""
   "sierpinski.png" 1620550888 47140 624595008e68fdd98313e74c1c69494a ""
   (generated)
+  "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.log"
+  "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.aux"
+  "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.pdf"
   "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.out"
   "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.toc"
-  "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.log"
-  "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.pdf"
-  "c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/memoria/main.aux"
