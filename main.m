@@ -79,7 +79,7 @@ save(['data/eigen_mats/vectors_' num2str(N) '_' num2str(rec_lvl) '.mat'], 'PSI')
 save(['data/eigen_mats/values_' num2str(N) '_' num2str(rec_lvl) '.mat'], 'E');
 
 
-enregy0 = num2str(E);
+enregy0 = num2str(E(1));
 r = [num2str(N) ' ' num2str(rec_lvl) ' ' enregy0 ' ' num2str(ErrorFlag)];
 
 end
