@@ -63,6 +63,7 @@ try
   tic
     [PSI,E,ErrorFlag] = lobpcg(rand(N^2, Neig), H, precision, 10000);
   toc
+  disp(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
 catch
   tic
     [PSI,E] = eigs(H, Neig, 'sa');
@@ -70,7 +71,6 @@ catch
   toc
 end
 
-disp(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
 
 disp('Saving matrices...');
 
