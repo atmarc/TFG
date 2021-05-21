@@ -59,9 +59,17 @@ H = Hkin + Hext;  % Hamiltonian
 
 disp('Finding eigenvalues...');
 precision = 1e-4;
-tic
-[PSI,E,ErrorFlag] = lobpcg(rand(N^2, Neig), H, precision, 10000);
-toc
+try
+  tic
+    [PSI,E,ErrorFlag] = lobpcg(rand(N^2, Neig), H, precision, 10000);
+  toc
+catch
+  tic
+    [PSI,E] = eigs(H, Neig, 'sa');
+    E = diag(E);
+  toc
+end
+
 disp(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
 
 disp('Saving matrices...');
