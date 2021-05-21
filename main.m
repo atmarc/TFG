@@ -74,8 +74,8 @@ end
 
 disp('Saving matrices...');
 
-save(['data/eigen_mats/vectors_' num2str(N) '_' num2str(rec) '.mat'], 'PSI');
-save(['data/eigen_mats/values_' num2str(N) '_' num2str(rec) '.mat'], 'E');
+save(['data/eigen_mats/vectors_' num2str(N) '_' num2str(rec_lvl) '.mat'], 'PSI');
+save(['data/eigen_mats/values_' num2str(N) '_' num2str(rec_lvl) '.mat'], 'E');
 
 
 enregy0 = num2str(E);
