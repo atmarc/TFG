@@ -1,0 +1,558 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.4)  9 MAY 2021 13:40
+entering extended mode
+**c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/GEP/GEP.tex
+(c:/Users/CONVIDAT/Desktop/personal/TFG/docs/memory/GEP/GEP.tex
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-02-18> (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
+(C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
+File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+)
+\c@part=\count179
+\c@section=\count180
+\c@subsection=\count181
+\c@subsubsection=\count182
+\c@paragraph=\count183
+\c@subparagraph=\count184
+\c@figure=\count185
+\c@table=\count186
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/blindtext\blindtext.sty
+Package: blindtext 2012/01/06 V2.0 blindtext-Package
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/latex-tools\xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+\c@blindtext=\count187
+\c@Blindtext=\count188
+\c@blind@countparstart=\count189
+\blind@countxx=\count190
+\blindtext@numBlindtext=\count191
+\blind@countyy=\count192
+\c@blindlist=\count193
+\c@blindlistlevel=\count194
+\c@blindlist@level=\count195
+\blind@listitem=\count196
+\c@blind@listcount=\count197
+\c@blind@levelcount=\count198
+\blind@mathformula=\count199
+\blind@Mathformula=\count266
+\c@blind@randomcount=\count267
+\c@blind@randommax=\count268
+\c@blind@pangramcount=\count269
+\c@blind@pangrammax=\count270
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/titlesec\titlesec.sty
+Package: titlesec 2019/10/16 v2.13 Sectioning titles
+\ttl@box=\box47
+\beforetitleunit=\skip49
+\aftertitleunit=\skip50
+\ttl@plus=\dimen139
+\ttl@minus=\dimen140
+\ttl@toksa=\toks15
+\titlewidth=\dimen141
+\titlewidthlast=\dimen142
+\titlewidthfirst=\dimen143
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
+Package: inputenc 2020/08/01 v1.3d Input encoding file
+\inpenc@prehook=\toks16
+\inpenc@posthook=\toks17
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty
+Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks18
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count271
+)) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/algorithms\algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count272
+\float@exts=\toks19
+\float@box=\box48
+\@float@everytoks=\toks20
+\@floatcapt=\box49
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks21
+\c@algorithm=\count273
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/algorithms\algorithmic.sty
+Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+\c@ALC@unique=\count274
+\c@ALC@line=\count275
+\c@ALC@rem=\count276
+\c@ALC@depth=\count277
+\ALC@tlm=\skip51
+\algorithmicindent=\skip52
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen144
+\Gin@req@width=\dimen145
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+\@linkdim=\dimen146
+\Hy@linkcounter=\count278
+\Hy@pagecounter=\count279
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2021-02-27 v7.00k Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref-langpatches.def
+File: hyperref-langpatches.def 2021-02-27 v7.00k Hyperref: patches for babel languages
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/etexcmds\etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count280
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
+File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count281
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen147
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count282
+\Field@Width=\dimen148
+\Fld@charsize=\dimen149
+Package hyperref Info: Hyper figures OFF on input line 6075.
+Package hyperref Info: Link nesting OFF on input line 6080.
+Package hyperref Info: Hyper index ON on input line 6083.
+Package hyperref Info: backreferencing OFF on input line 6090.
+Package hyperref Info: Link coloring OFF on input line 6095.
+Package hyperref Info: Link coloring with OCG OFF on input line 6100.
+Package hyperref Info: PDF/A mode OFF on input line 6105.
+LaTeX Info: Redefining \ref on input line 6145.
+LaTeX Info: Redefining \pageref on input line 6149.
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty
+Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi package
+with kernel methods
+)
+\Hy@abspage=\count283
+\c@Item=\count284
+\c@Hfootnote=\count285
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2021-02-27 v7.00k Hyperref driver for pdfTeX
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery package
+with kernel methods
+)
+\Fld@listcount=\count286
+\c@bookmark@seq@number=\count287
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 286.
+)
+\Hy@SectionHShift=\skip53
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count288
+\l__pdf_internal_box=\box50
+) (GEP.aux
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+)
+\openout1 = `GEP.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count289
+\scratchdimen=\dimen150
+\scratchbox=\box51
+\nofMPsegments=\count290
+\nofMParguments=\count291
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count292
+\MPscratchDim=\dimen151
+\MPnumerator=\count293
+\makeMPintoPDFobject=\count294
+\everyMPtoPDFconversion=\toks23
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+Package hyperref Info: Link coloring OFF on input line 12.
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+ (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (C:\Users\CONVIDAT\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count295
+)
+LaTeX Info: Redefining \ref on input line 12.
+LaTeX Info: Redefining \pageref on input line 12.
+LaTeX Info: Redefining \nameref on input line 12.
+ (GEP.out) (GEP.out)
+\@outlinefile=\write3
+\openout3 = `GEP.out'.
+
+<./logo-fib.png, id=150, 1003.75pt x 150.5625pt>
+File: ./logo-fib.png Graphic file (type png)
+<use ./logo-fib.png>
+Package pdftex.def Info: ./logo-fib.png  used on input line 24.
+(pdftex.def)             Requested size: 345.0pt x 51.75113pt.
+ [1
+
+{C:/Users/CONVIDAT/AppData/Local/MiKTeX/pdftex/config/pdftex.map} <./logo-fib.png>] (GEP.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 2.
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.35 ...3.3}Social dimension}{18}{subsection.13.3}
+                                                  % [1])
+\tf@toc=\write4
+\openout4 = `GEP.toc'.
+
+ [2]
+Underfull \hbox (badness 10000) in paragraph at lines 39--40
+
+ []
+
+
+Overfull \hbox (2.11177pt too wide) in paragraph at lines 41--42
+[]\OT1/cmr/m/n/10 The physics in-ves-ti-ga-tion field highly ben-e-fits of this problem-solving ap-proaches,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 41--42
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--44
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 46--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--49
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 56--57
+
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
+
+ []
+
+
+Overfull \hbox (21.00064pt too wide) in paragraph at lines 63--64
+[]\OT1/cmr/m/n/10 The Schrodinger equa-tion is a dif-fer-en-tial equa-tion, and has the fol-low-ing form: 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--73
+
+ []
+
+[4]
+Overfull \hbox (1.31207pt too wide) in paragraph at lines 80--80
+|[]\OT1/cmr/bx/n/10 Bose{Einstein con-den-sate and Gross{Pitaevskii equa-tion| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
+
+ []
+
+<./cantor.png, id=221, 427.05pt x 69.3135pt>
+File: ./cantor.png Graphic file (type png)
+<use ./cantor.png>
+Package pdftex.def Info: ./cantor.png  used on input line 92.
+(pdftex.def)             Requested size: 345.0pt x 55.99767pt.
+<./sierpinski.png, id=222, 568.37344pt x 567.62062pt>
+File: ./sierpinski.png Graphic file (type png)
+<use ./sierpinski.png>
+Package pdftex.def Info: ./sierpinski.png  used on input line 97.
+(pdftex.def)             Requested size: 227.34535pt x 227.04422pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 102--103
+
+ []
+
+[5 <./cantor.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 107--108
+
+ []
+
+[6 <./sierpinski.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 109--110
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
+
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--139
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 140--141
+
+ []
+
+<./wavefunction.png, id=245, 623.32875pt x 592.46344pt>
+File: ./wavefunction.png Graphic file (type png)
+<use ./wavefunction.png>
+Package pdftex.def Info: ./wavefunction.png  used on input line 144.
+(pdftex.def)             Requested size: 311.6636pt x 296.23099pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 148--149
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--151
+
+ []
+
+[8] [9 <./wavefunction.png>] [10] [11]
+<./dependencies.PNG, id=267, 185.19188pt x 487.8225pt>
+File: ./dependencies.PNG Graphic file (type png)
+<use ./dependencies.PNG>
+Package pdftex.def Info: ./dependencies.PNG  used on input line 221.
+(pdftex.def)             Requested size: 92.5957pt x 243.91064pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[12]
+<./Gantt.PNG, id=276, 1106.63437pt x 581.92406pt>
+File: ./Gantt.PNG Graphic file (type png)
+<use ./Gantt.PNG>
+Package pdftex.def Info: ./Gantt.PNG  used on input line 238.
+(pdftex.def)             Requested size: 1106.63167pt x 581.92264pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[13 <./dependencies.PNG>]
+
+LaTeX Warning: Text page 14 contains only floats.
+
+[14 <./Gantt.PNG>]
+Underfull \hbox (badness 10000) in paragraph at lines 296--297
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 298--299
+
+ []
+
+[15]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 389--390
+
+ []
+
+[16] [17] [18]
+Underfull \hbox (badness 2573) in paragraph at lines 445--447
+[]\OT1/cmr/m/n/10 Solving Hy-dro-gen atom nu-mer-i-cally with 14 lines of Mat-lab code
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 452--453
+[]\OT1/cmr/m/n/10 FIB-UPC, \Nor-ma-tiva del tre-ball fi-nal de grau del grau en
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 452--453
+\OT1/cmr/m/n/10 en-giny-e-ria in-formatica de la FIB," 2012. [On-line]. Avali-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 452--453
+\OT1/cmr/m/n/10 https://www.fib.upc.edu/sites/fib/files/documents/actes/normativatfg-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
+[]\OT1/cmr/m/n/10 Taules re-tribu-tives del per-sonal do-cent i in-ves-ti-gador lab-o-ral
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
+\OT1/cmr/m/n/10 Any 2020 [https://www.upc.edu/transparencia/ca/informacio-de-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 456--457
+[]\OT1/cmr/m/n/10 Normativa del tre-ball fi-nal de grau del grau en En-giny-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 456--457
+\OT1/cmr/m/n/10 e-ria In-formatica de la Fac-ul-tat d'Informatica de Barcelona
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 456--457
+\OT1/cmr/m/n/10 [https://www.fib.upc.edu/sites/fib/files/documents/estudis/normativa-
+ []
+
+[19pdfTeX warning (ext4): destination with the same identifier (name{cite.}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.463 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier (name{cite.}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.463 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier (name{cite.}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.463 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier (name{cite.}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.463 \end{document}
+                    ] (GEP.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package rerunfilecheck Info: File `GEP.out' has not changed.
+(rerunfilecheck)             Checksum: D3992298407B766DB53D9E108AD64A55;5567.
+ ) 
+Here is how much of TeX's memory you used:
+ 8972 strings out of 479321
+ 134230 string characters out of 2855153
+ 446523 words of memory out of 3000000
+ 26238 multiletter control sequences out of 15000+600000
+ 407194 words of font info for 39 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 71i,8n,74p,1247b,394s stack positions out of 5000i,500n,10000p,200000b,80000s
+ <C:\Users\CONVIDAT\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcbx1000.pk> <C:\Users\CONVIDAT\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/CONVIDAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on c:/Users\CONVIDAT\Desktop\personal\TFG\docs\memory\GEP\GEP.pdf (20 pages, 747272 bytes).
+PDF statistics:
+ 387 PDF objects out of 1000 (max. 8388607)
+ 78 named destinations out of 1000 (max. 500000)
+ 327 words of extra memory for PDF output out of 10000 (max. 10000000)
+
