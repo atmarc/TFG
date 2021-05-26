@@ -129,7 +129,7 @@ def IPR_states():
         IPRs = []
         with open(filename, 'r') as f:
             for line in f.readlines():
-                state, energy, IPR = line[:-1].split(',')
+                state, energy, IPR = line[:-1].split()
                 states.append(int(state)) 
                 energies.append(float(energy)) 
                 IPRs.append(float(IPR))
@@ -142,38 +142,39 @@ def IPR_states():
         return list(map(lambda x: (x - l_min)/(l_max - l_min), l))
 
 
-    X0, Y0, Z0 = read_data('data/IPR_data/IPR_data_rec0_243')
-    X1, Y1, Z1 = read_data('data/IPR_data/IPR_data_rec1_243')
-    X2, Y2, Z2 = read_data('data/IPR_data/IPR_data_rec2_243')
-    X3, Y3, Z3 = read_data('data/IPR_data/IPR_data_rec3_243')
-    X4, Y4, Z4 = read_data('data/IPR_data/IPR_data_rec4_243')
-    X5, Y5, Z5 = read_data('data/IPR_data/IPR_data_rec5_243')
+    X0, Y0, Z0 = read_data('data/IPR_data/IPR_data_rec0')
+    X1, Y1, Z1 = read_data('data/IPR_data/IPR_data_rec1')
+    X2, Y2, Z2 = read_data('data/IPR_data/IPR_data_rec2')
+    X3, Y3, Z3 = read_data('data/IPR_data/IPR_data_rec3')
+    X4, Y4, Z4 = read_data('data/IPR_data/IPR_data_rec4')
+    # X5, Y5, Z5 = read_data('data/IPR_data/IPR_data_rec5_243')
 
-    plt.plot(Y0, Z0, 'x', label='iteration 0')
-    plt.plot(Y1, Z1, 'x', label='iteration 1')
-    plt.plot(Y2, Z2, 'x', label='iteration 2')
-    plt.plot(Y3, Z3, 'x', label='iteration 3')
-    plt.plot(Y4, Z4, 'x', label='iteration 4')
-    plt.plot(Y5, Z5, 'x', label='iteration 5')
+    # plt.plot(Y0, Z0, 'x', label='iteration 0')
+    # plt.plot(Y1, Z1, 'x', label='iteration 1')
+    # plt.plot(Y2, Z2, 'x', label='iteration 2')
+    # plt.plot(Y3, Z3, 'x', label='iteration 3')
+    # plt.plot(Y4, Z4, 'x', label='iteration 4')
+    # plt.plot(Y5, Z5, 'x', label='iteration 5')
 
     # plt.plot(X0, Z0, '--', label='iteration 0')
-    # plt.plot(X1, Z1, '--', label='iteration 1')
-    # plt.plot(X2, Z2, '--', label='iteration 2')
-    # plt.plot(X3, Z3, '--', label='iteration 3')
-    # plt.plot(X4, Z4, '--', label='iteration 4')
-    # plt.plot(X5, Z5, '--', label='iteration 5')
 
-    # plt.plot(X0, Y0, 'x', label='iteration 0')
-    # plt.plot(X1, Y1, 'x', label='iteration 1')
-    # plt.plot(X2, Y2, 'x', label='iteration 2')
-    # plt.plot(X3, Y3, 'x', label='iteration 3')
-    # plt.plot(X4, Y4, 'x', label='iteration 4')
-    # plt.plot(X5, Y5, 'x', label='iteration 5')
+    Y0_diff = [Y0[i] - Y0[i - 1] for i in range(1, len(Y0))]
+    Y1_diff = [Y1[i] - Y1[i - 1] for i in range(1, len(Y1))]
+    Y4_diff = [Y4[i] - Y4[i - 1] for i in range(1, len(Y4))]
+    
+    # plt.plot(list(range(len(Y0_diff))), Y0_diff, 'x', label='iteration 0')
+    # plt.plot(list(range(len(Y0_diff))), Y4_diff, 'x', label='iteration 4')
+    # plt.ylabel("Energy")
+    # plt.show()
+    
+    plt.hist(Y0_diff, bins=40)
+    plt.hist(Y4_diff, bins=40)
+    
 
-    plt.xlabel("Energy")
-    plt.ylabel("IPR")
+    plt.ylabel("Energy")
+    # plt.ylabel("IPR")
     # plt.yscale("log")
-    plt.title("Energy of the different eigenstates")
+    # plt.title("Energy of the different eigenstates")
     plt.legend()
     plt.show()
 
@@ -254,8 +255,8 @@ def random_walks():
 
 if __name__ == "__main__":
     # execution_time()
-    # IPR_states()
-    rec_vs_energy()
+    IPR_states()
+    # rec_vs_energy()
     # energy_to_inf(6, print_graph=True)
     # min_size_energy_vs_rec()
     # random_walks()
