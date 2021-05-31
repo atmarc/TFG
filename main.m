@@ -1,21 +1,22 @@
 
 function r = main()
   pot = 10000;
-  for rec=2
-      for N=[3^3]
+  for rec=6
+      for N=[3^6 3^6*2 3^6*3 3^6*4 3^6*5 3^6*6 3^6*7 3^6*8]
           tic
-          data = schrodinger_p(N, rec, 0.5, false, pot);
+          data = schrodinger_p(N, rec, false, pot);
           disp(data);
           toc
-          save_to_file([num2str(rec) '_pbc.txt'], data);
+          save_to_file(['rmax_proves_' num2str(rec) '_pbc.txt'], data);
       end
   end
 end
 
 
-function r = schrodinger_p(N, rec_lvl, Rmax, PBC, pot)
+function r = schrodinger_p(N, rec_lvl, PBC, pot)
 disp(['Computing: ' num2str(N) ' ' num2str(rec_lvl)]);
-Neig = (N^2 + 1)/2; % number of eigenvalues to be found
+Neig = 1; % number of eigenvalues to be found
+Rmax = (3^(recursion_level)) / 2;
 
 if PBC
   N = N - 1;
@@ -49,8 +50,7 @@ else
   Vext_mat = sierpinski(N, rec_lvl, false, pot);
 end
 
-noise = ((rand(N^2, 1) - 0.5) * 0);
-Vext = Vext_mat(:) + noise;
+Vext = Vext_mat(:);
 % -------------------------------------
 
 Hkin = -0.5 * L2;
@@ -58,11 +58,11 @@ Hext = spdiags(Vext, 0, N^2, N^2);
 H = Hkin + Hext;  % Hamiltonian
 
 disp('Finding eigenvalues...');
-precision = 1e-4;
+precision = 1e-3;
 try
-    [PSI,E,ErrorFlag] = lobpcg(rand(N^2, Neig), H, precision, 10000);
+  [PSI,E,ErrorFlag] = lobpcg(rand(N^2, Neig), H, precision, 10000);
 catch
-  
+  disp(['Computing values with eigs...']);  
   [PSI,E] = eigs(H, Neig, 'sa');
   E = diag(E);
   ErrorFlag = 0;
@@ -71,9 +71,6 @@ end
 disp(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
 
 disp('Saving matrices...');
-
-save(['data/eigen_mats/vectors_' num2str(N) '_' num2str(rec_lvl) '.mat'], 'PSI');
-save(['data/eigen_mats/values_' num2str(N) '_' num2str(rec_lvl) '.mat'], 'E');
 
 
 enregy0 = num2str(E(1));
