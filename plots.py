@@ -5,7 +5,6 @@ import numpy as np
 from scipy.optimize import curve_fit
 from collections import defaultdict
 import os
-import matplotlib
 
 DIMENSION = np.log(8) / np.log(3)
 
@@ -27,7 +26,7 @@ def energy_to_inf(n_rec, print_graph=False):
     X = [1/x for (x, _, _, _) in data[-MAX_SAMPLE_NUM:]]        
     Y = [y for (_, _, y, _) in data[-MAX_SAMPLE_NUM:]]        
 
-    recta = np.poly1d(np.polyfit(X, Y, 1))
+    recta = np.poly1d(np.polyfit(X, Y, 2))
     value_at_zero = recta(0)
     print(f'Value at 0 ({n_rec}):', value_at_zero)
 
@@ -35,11 +34,13 @@ def energy_to_inf(n_rec, print_graph=False):
         X_pred = np.arange(0, max(X) + 0.001, 0.0001)
         Y_pred = recta(X_pred)
 
-        plt.title(f'Getting energy when N --> inf with rec = {n_rec}')
+        plt.title(f'Ground state energy with external potential \n with shape of Sierpinski carpet of iteration {n_rec}')
         # plt.xscale("log")
         
         plt.plot(X, Y, 'x', color="black")
         plt.plot(X_pred, Y_pred, '--', label=n_rec)
+        plt.xlabel('1/N')
+        plt.ylabel('Ground state energy $\left ( \\frac{\\hbar ^2}{2m} \\right )$')
         plt.show()
 
     error = value_at_zero - data[-1][2]
@@ -53,11 +54,12 @@ def rec_vs_energy():
     energies = []
     rec_iter = []
     errors = []
-    for i in range(1,9):
+    max_i = 6
+    for i in range(1, max_i + 1):
         en, err = energy_to_inf(i, print_graph=False)
-        Lmin = 1 / (3**i)
-        en_inc = en / (1 / (Lmin**2))
-        energies.append(en_inc)
+        # Lmin = 1 / (3**i)
+        # en_inc = en / (1 / (Lmin**2))
+        energies.append(en)
         errors.append(err)
         rec_iter.append(i)
 
@@ -71,9 +73,10 @@ def rec_vs_energy():
     
     params = list(map(lambda x: round(x,4), popt))
     print('')
-    print(f'y = {params[0]} * exp({params[1]}*x)')
+    print(params)
+    # print(f'y = {params[0]} * exp({params[1]}*x)')
     
-    plt.plot(X_pred, Y_pred, '--', label="Aproximation")
+    plt.plot(X_pred, Y_pred, '--')
     plt.plot(rec_iter[0:5], energies[0:5], 'x')
     # plt.errorbar(rec_iter[0:5], energies[0:5], yerr=errors[0:5], fmt='.',capsize=2)
     plt.plot(rec_iter[5:], energies[5:], 'x')
@@ -85,10 +88,11 @@ def rec_vs_energy():
 
     # plt.xscale("log")
     # plt.yscale("log")
-    plt.title("Ground energy vs recursion iteration of the fractal")
+    plt.title("Ground state energy vs iteration of the fractal")
     plt.xlabel("Iteration of the fractal")
-    plt.ylabel("Energy")
-    plt.legend()
+    plt.ylabel("Ground state energy $\left ( \\frac{\\hbar ^2}{2m} \\right )$")
+    plt.xticks(list(range(1, max_i + 1)))
+    # plt.legend()
     plt.show()
 
 
@@ -129,7 +133,8 @@ def IPR_states():
         IPRs = []
         with open(filename, 'r') as f:
             for line in f.readlines():
-                state, energy, IPR = line[:-1].split()
+                print(line[:-1].split(','))
+                state, energy, IPR = line[:-1].split(',')
                 states.append(int(state)) 
                 energies.append(float(energy)) 
                 IPRs.append(float(IPR))
@@ -142,18 +147,20 @@ def IPR_states():
         return list(map(lambda x: (x - l_min)/(l_max - l_min), l))
 
 
-    X0, Y0, Z0 = read_data('data/IPR_data/IPR_data_rec0')
-    X1, Y1, Z1 = read_data('data/IPR_data/IPR_data_rec1')
-    X2, Y2, Z2 = read_data('data/IPR_data/IPR_data_rec2')
-    X3, Y3, Z3 = read_data('data/IPR_data/IPR_data_rec3')
+    # X0, Y0, Z0 = read_data('data/IPR_data/IPR_data_rec0_243')
+    # X1, Y1, Z1 = read_data('data/IPR_data/IPR_data_rec1_243')
+    # X2, Y2, Z2 = read_data('data/IPR_data/IPR_data_rec2_243')
+    # X3, Y3, Z3 = read_data('data/IPR_data/IPR_data_rec3_243')
     X4, Y4, Z4 = read_data('data/IPR_data/IPR_data_rec4')
+    X4_pbc, Y4_pbc, Z4_pbc = read_data('data/IPR_data/IPR_data_rec4_pbc')
     # X5, Y5, Z5 = read_data('data/IPR_data/IPR_data_rec5_243')
 
     # plt.plot(Y0, Z0, 'x', label='iteration 0')
     # plt.plot(Y1, Z1, 'x', label='iteration 1')
     # plt.plot(Y2, Z2, 'x', label='iteration 2')
     # plt.plot(Y3, Z3, 'x', label='iteration 3')
-    # plt.plot(Y4, Z4, 'x', label='iteration 4')
+    plt.plot(X4[:30], Y4[:30], 'x', label='zbc iteration 4')
+    plt.plot(X4_pbc, Y4_pbc, 'x', label='pbc iteration 4')
     # plt.plot(Y5, Z5, 'x', label='iteration 5')
 
     # plt.plot(X0, Z0, '--', label='iteration 0')
@@ -241,7 +248,7 @@ def random_walks():
         plt.plot(X, values, label=f"Real values rec_lvl={rec_lvl}")
         # plt.xscale("log")
         # plt.yscale("log")
-    plt.legend()
+    # plt.legend()
     plt.title('Random walks')
     plt.xlabel('Time')
     plt.ylabel('Distance')
@@ -253,10 +260,76 @@ def random_walks():
     plt.ylabel('Diffusion coefficient')
     plt.show()
 
+
+def pbc_zbc():
+    with open('3_zbc.txt') as f:
+        X = []
+        Y = []
+        for line in f.readlines():
+            N, _, energy, _ = line.split()
+            X.append(1/int(N))
+            Y.append(float(energy))
+    
+    recta = np.poly1d(np.polyfit(X, Y, 2))
+    value_at_zero = recta(0)
+    print(f'Value at 0 (zbc):', value_at_zero)
+
+    X_pred = np.arange(0, max(X) + 0.001, 0.0001)
+    Y_pred = recta(X_pred)
+    
+    plt.plot(X, Y, 'x')
+    plt.plot(X_pred, Y_pred, '--', label="Zero bc")
+
+
+    with open('3_pbc.txt') as f:
+        X = []
+        Y = []
+        for line in f.readlines():
+            N, _, energy, _ = line.split()
+            X.append(1/int(N))
+            Y.append(float(energy))
+    
+    recta = np.poly1d(np.polyfit(X, Y, 2))
+    value_at_zero = recta(0)
+    print(f'Value at 0 (pbc):', value_at_zero)
+
+    X_pred = np.arange(0, max(X) + 0.001, 0.0001)
+    Y_pred = recta(X_pred)
+    
+    plt.plot(X, Y, 'x')
+    plt.plot(X_pred, Y_pred, '--', label="Periodic bc")
+    plt.xlabel('1/N')
+    plt.ylabel('Energy')
+    plt.legend()
+    plt.show()
+
+
+def time_execution_eigs():
+    T1 = []
+    T2 = []
+    N = []
+    with open('data/execution_time/time_eigs10.txt') as f:
+        for line in f.readlines():
+            n, t1, t2 = line.split()
+            N.append(int(n)**4)
+            T1.append(float(t1))
+            T2.append(float(t2))
+
+    plt.plot(N, T2, '--x', label="eigs method")
+    plt.plot(N, T1, '--x', label="LOBPCG algorithm")
+    plt.title('Comparing methods for obtaining first 20 eigenpairs')
+    plt.xlabel('Size of the matrix')
+    plt.ylabel('Execution time (s)')
+    plt.legend()
+    plt.show()
+
+
 if __name__ == "__main__":
     # execution_time()
-    IPR_states()
-    # rec_vs_energy()
-    # energy_to_inf(6, print_graph=True)
+    # IPR_states()
+    rec_vs_energy()
+    # energy_to_inf(3, print_graph=True)
     # min_size_energy_vs_rec()
     # random_walks()
+    # pbc_zbc()
+    # time_execution_eigs()
