@@ -5,12 +5,11 @@ function r = chess_grid(n, squares)
     pot = 10000;
     M = zeros(n);
 
-    for i=[1:n]
-        for j=[1:n]
-            x = mod(mod(i, n), 2) == 0;
-            y = mod(mod(j, n), 2) == 0;
-             
-            if x && y || !x && !y
+    for i=(1:n)
+        for j=(1:n)
+            x = mod(floor((i - 1)/(n/squares)), 2) == 0;
+            y = mod(floor((j - 1)/(n/squares)), 2) == 0;
+            if x && y || ~x && ~y
                 M(i, j) = pot;
             end
         end

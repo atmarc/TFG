@@ -4,7 +4,7 @@ disp('Starting program');
 % --- Parameters ------------------------------
 N = 3^3;
 Neig = N;%(N^2 + 1)/2; % number of eigenvalues to be found
-recursion_level = 0;
+recursion_level = 1;
 Rmax = 1 / 2;
 noise_var = 0;
 % Rmax = (3^(recursion_level)) / 2   % --- keep Lmin to 1;
@@ -63,15 +63,17 @@ tic
     E = diag(E);
 toc
 
-%display(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
+% --------------------------------------------------------------------------------------------------------------
 
 c = zeros(length(E), 1);
 
 sigma = 0.2;
 x0 = 0; y0 = 0;
 k = 10;% impulso
-PSI_init = exp(0.5*(- (X - x0).^2/sigma.^2 - (Y - y0).^2/sigma.^2)) .* exp(sqrt(-1) * k * X);
+% PSI_init = exp(0.5*(- (X - x0).^2/sigma.^2 - (Y - y0).^2/sigma.^2)) .* exp(sqrt(-1) * k * X);
 %PSI_init = PSI(:, 1);
+sigma = 0.1;
+PSI_init = exp(0.5 * (1/sigma.^2) * (- (X - x0).^2 - (Y - y0).^2));
 
 for i=1:length(E)  
     disp(['Eigenstate: ' num2str(i-1) ' Energy: ' num2str(E(i), 5)]); %display result
@@ -84,13 +86,10 @@ for i=1:length(E)
 end
 
 
-my_figure = figure;
-%filename = 'prova.gif';
-
 
 time_values = [0:50] * 0.005;
-displacementX = zeros(1, size(time_values)(2));
-displacementY = zeros(1, size(time_values)(2));
+displacementX = zeros(1, length(time_values));
+displacementY = zeros(1, length(time_values));
 index = 1;
 for t=time_values
     PSI_t = zeros(N^2, 1);
@@ -104,7 +103,7 @@ for t=time_values
     
     displacementX(1, index) = sum((X - x0).^2 .* abs(PSI_tn).^2 * dx^2);
     displacementY(1, index) = sum((Y - y0).^2 .* abs(PSI_tn).^2 * dx^2);
-    index += 1;
+    index = index + 1;
     
     disp(['Time: ' num2str(t)]);
     
@@ -129,8 +128,7 @@ disp('Plotting dispacement...');
 
 adjust_t = time_values(1:5);
 
-plot(time_values, displacementX, time_values, displacementY,
- adjust_t, 0.5 *(sigma^2) + 0.5*(adjust_t.^2)/(sigma^2));
+plot(time_values, displacementX, time_values, displacementY, adjust_t, 0.5 *(sigma^2) + 0.5*(adjust_t.^2)/(sigma^2));
 
 
 
