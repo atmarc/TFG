@@ -1,7 +1,6 @@
 # Quantum particles in fractalexternal potential
 
-This is the repository of my final degree thesis (TFG in catalan). It contains all the Matlab programs and some data (not sorted, sorry) that I present on my thesis report.
-
+This is the repository of my final degree thesis (TFG in catalan). It contains all the Matlab programs and some data (not sorted, sorry) that I present on my thesis `report.pdf`.
 ## Thesis abstract
 The Schrödinger equation gives us a time evolution of the wave function of a certain quantum system, thus we obtain a mathematical description of this system. This project focuses on solving it numerically, using the exact diagonalization method.
 
