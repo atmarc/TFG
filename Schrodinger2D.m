@@ -2,13 +2,14 @@
 disp('Starting program');
 
 % --- Parameters ------------------------------
-N = 3^4;
+N = 3^5;
 Neig = 1; % number of eigenvalues to be found
-recursion_level = 3;
-Rmax = (3^(recursion_level - 1)) / 2;
-PBC = true;
+recursion_level = 5;
+noise_var = 0;
+Rmax = (3^(recursion_level)) / 2;   % --- keep Lmin to 1;
+% Rmax = 1 / 2;
+PBC = false;
 % ---------------------------------------------
-
 
 if PBC
   N = N - 1;
@@ -48,7 +49,7 @@ else
   Vext_mat = sierpinski(N, recursion_level, true);
 end
 
-noise = ((rand(N^2, 1) - 0.5) * 0);
+noise = ((rand(N^2, 1) - 0.5) * noise_var);
 Vext = Vext_mat(:) + noise;
 %imagesc(reshape(Vext, [N, N]));
 %pause;
@@ -58,13 +59,21 @@ Hkin = -0.5 * L2;
 Hext = spdiags(Vext, 0, N^2, N^2);
 H = Hkin + Hext;  % Hamiltonian
 
-display('Finding eigenvalues...');
+disp('Finding eigenvalues...');
 
-precision = 1e-2;
 tic
+precision = 1e-3;
 [PSI,E,ErrorFlag] = lobpcg(rand(N^2, Neig), H, precision, 10000);
+disp(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
 toc
-display(['Error flag: ' num2str(ErrorFlag)]); % if it doesn't converge with 
+
+% tic
+%   opt.p = 50; 
+%   [PSI,E] = eigs(H, Neig, 'sa', opt);
+% %   [PSI,E] = eigs(H, Neig, 'sa');
+%   E = diag(E);
+% toc
+
 
 max_IPR_wavefun = [];
 max_IPR = -1;
@@ -75,16 +84,16 @@ for i=1:length(diag(E))
   disp(['Eigenstate ' num2str(i-1) ' energy ' num2str(E(i), 5) '\hbar\omega']); %display result
   PSI_i = PSI(:, i);
   PSI_2 = reshape(PSI_i, [N,N]); 
-  PSI_2 = PSI_2 / sign(sum(sum(PSI_2)));
-  PSI_2 = PSI_2 / dx;
+%   PSI_2 = PSI_2 / sign(sum(sum(PSI_2)));
+%   PSI_2 = PSI_2 / dx;
   
   IPR = sum(sum(sum(PSI_2.^4))*dx^2);
   disp(['IPR: ' num2str(IPR)]);
-  data_to_save = [num2str(i-1) ' ' num2str(E(i), 5) ' ' num2str(IPR)];
+
+  % data_to_save = [num2str(i-1) ' ' num2str(E(i), 5) ' ' num2str(IPR)];
+  %save_to_file('data/IPR_data/IPR_data_rec4_pbc', data_to_save);
   
-  % save_to_file('data/IPR_data/IPR_data_rec1', data_to_save);
-  
-  h = pcolor(x,x,PSI_2.^2);
+  h = pcolor(x,x,PSI_2);
   daspect([1 1 1]);
   colorbar; 
   set(h, 'EdgeColor', 'none');
@@ -118,7 +127,6 @@ disp(['State with min IPR: ' num2str(min_IPR)]);
 % ------------------------------------------------------
 
 PSI_0 = PSI(:, 1);
-E_0 = E(1);
 %PSI_0 = PSI_0 * sign(sum(PSI_0));
 PSI_mat = reshape(PSI_0, [N,N]); 
 
@@ -145,7 +153,7 @@ disp(['Energy prime: ' num2str(E_c_2)]);
 Eq_18 = (PSI_prime' * PSI_c)^2 / ((PSI_prime' * PSI_prime) * (PSI_c' * PSI_c));
 disp(['Comprovar eq 18: ' num2str(Eq_18)]);
 
-disp(['Energy: ' num2str(E_0)]);
+disp(['Energy: ' num2str(E(1))]);
 disp(['Energy corner: ' num2str(E_c)]);
 
 residual_vec = (PSI_c / sqrt(PSI_c' * PSI_c)) - (PSI_0/norm(PSI_0));

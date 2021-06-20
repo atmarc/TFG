@@ -1,8 +1,10 @@
+from types import LambdaType
 import matplotlib.pyplot as plt
 from matplotlib import rc
 
 import numpy as np
 from scipy.optimize import curve_fit
+from scipy import constants as const
 from collections import defaultdict
 import os
 
@@ -54,7 +56,7 @@ def rec_vs_energy():
     energies = []
     rec_iter = []
     errors = []
-    max_i = 8
+    max_i = 6
     for i in range(1, max_i + 1):
         en, err = energy_to_inf(i, print_graph=False)
         # Lmin = 1 / (3**i)
@@ -69,14 +71,14 @@ def rec_vs_energy():
 
     popt, pcov = curve_fit(func, rec_iter[0:5], energies[0:5], maxfev=10000)
     X_pred = np.arange(1, rec_iter[-1], 0.0001)
-    Y_pred = func(X_pred, *popt)
+    Y_pred = func(X_pred, 1.93, 1.79)
     
-    params = list(map(lambda x: round(x,4), popt))
+    params = list(map(lambda x: x, popt))
     print('')
     # print(params)
-    print(f'y = {params[0]} * exp({params[1]}*x)')
+    print(f'y = {params[1]} * exp({params[0]}*x)')
     
-    # plt.plot(X_pred, Y_pred, '--')
+    plt.plot(X_pred, Y_pred, '--')
     plt.plot(rec_iter[0:5], energies[0:5], 'x')
     # plt.errorbar(rec_iter[0:5], energies[0:5], yerr=errors[0:5], fmt='.',capsize=2)
     plt.plot(rec_iter[5:], energies[5:], 'x')
@@ -86,7 +88,7 @@ def rec_vs_energy():
     Y_upper_bound = [np.pi**2 * 9**i for i in range(9)]
     # plt.plot(X_upper_bound, Y_upper_bound, label="upper bound")
 
-    # plt.yscale("log")
+    plt.yscale("log")
     plt.title("Ground state energy vs iteration of the fractal")
     plt.xlabel("Iteration of the fractal")
     plt.ylabel("Ground state energy $\left ( \\frac{\\hbar ^2}{2m} \\right )$")
@@ -309,7 +311,7 @@ def time_execution_eigs():
     T1 = []
     T2 = []
     N = []
-    with open('data/execution_time/time_eigs10.txt') as f:
+    with open('data/execution_time/time_eigs.txt') as f:
         for line in f.readlines():
             n, t1, t2 = line.split()
             N.append(int(n)**4)
@@ -325,12 +327,89 @@ def time_execution_eigs():
     plt.show()
 
 
+def time_evolution_displacement():
+    def load_data(filename):
+        Y = []
+        with open(filename) as f:
+            for line in f.readlines():
+                x_2, y_2 = line.split()
+                disp = float(x_2)
+                # disp = (float(x_2) + float(y_2))/2
+                Y.append(disp)
+
+        return Y[:40] # There are 50 samples on the files, we can take the first ones
+    
+    # disp_0 = load_data('data/time_evolution_disp/disp_0_smallt.txt') 
+    # disp_0 = load_data('data/time_evolution_disp/disp_0.txt') 
+    disp_1 = load_data('data/time_evolution_disp/disp_1.txt') 
+    disp_2 = load_data('data/time_evolution_disp/disp_2.txt') 
+    disp_3 = load_data('data/time_evolution_disp/disp_3.txt') 
+    disp_4 = load_data('data/time_evolution_disp/disp_4.txt') 
+
+    X = np.array(list(range(len(disp_1)))) * 0.005
+    # X = np.array(list(range(len(disp_0)))) * 0.0002
+
+    # plt.plot(X, disp_0, label="no potential")
+    plt.plot(X, disp_1, label="iteration 1")
+    plt.plot(X, disp_2, label="iteration 2")
+    plt.plot(X, disp_3, label="iteration 3")
+    plt.plot(X, disp_4, label="iteration 4")
+
+    # plt.plot([0, X[-1]], np.array([0.5/3, 0.5/3])**2, '--')
+    # plt.plot([0, X[-1]], np.array([0.5, 0.5])**2, '--', color="tab:blue", label="box border")
+    # plt.plot([0, X[-1]], np.array([1/9, 1/9])**2, '--', color="tab:orange")
+    # plt.plot([0, X[-1]], np.array([1/(9**2), 1/(9**2)])**2, '--', color="tab:green")
+    # plt.plot([0, X[-1]], np.array([0.3876, 0.3876])**2, '--')
+
+    func = lambda x, a, c: np.power(x, a) + c 
+
+    # for i, y_data in enumerate([disp_0, disp_1, disp_2, disp_3, disp_4]):
+    colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red']
+    ranges = [(3, 35), (3, 40), (3, 40), (3, 40)]
+    for i, y_data in enumerate([disp_1, disp_2, disp_3, disp_4]):
+        X_pred = X[ranges[i][0]:ranges[i][1]]
+        Y_data = y_data[ranges[i][0]:ranges[i][1]]
+        # X_pred = X[3:]
+        # Y_data = y_data[3:]
+
+        bounds = ([0, -0.5], [1, 0.5])
+        # bounds = ([0, 0, -0.5], [1, 1, 0.5])
+        popt, pcov = curve_fit(func, X_pred, Y_data, maxfev=10000, bounds=bounds)
+        # if i == 0: popt = [0.50, 0.45, -0.006]
+        Y_pred = func(X_pred, *popt)
+        print(f'Iteration {i}: y = {round(popt[1], 4)} +  t^{round(popt[0], 4)}')
+        # print(f'Iteration {i}: y = {round(popt[2], 4)} + {round(popt[1], 4)} * t^{round(popt[0], 4)}')
+        plt.plot(X_pred, Y_pred, '--', color=colors[i])
+
+    sigma = 0.1
+    X_pred = np.arange(0, 0.05, 0.001)
+    # ballistic_exp = (sigma**2/2) + ((X_pred**2) / (sigma**2))
+    # ballistic_exp = (sigma**2/2) * (1 + (((const.h * X) / (sigma**2))**2) )
+
+    # plt.plot(X_pred, ballistic_exp, '--', label="ballistic")
+    # plt.plot(X[:11], ballistic_exp[:11], '--', label="ballistic")
+
+    # plt.plot([0, X[-1]], np.array([sigma**2/2, sigma**2/2]), '--', label="$\sigma^2/2$")
+
+
+    plt.legend(loc='upper left')
+    plt.xlabel('Time')
+    plt.ylabel('MSD')
+    plt.title('Expected value of MSD for different external potential')
+    # plt.yscale('log')
+    plt.show()
+
+
+
+
+
 if __name__ == "__main__":
     # execution_time()
-    IPR_states()
+    # IPR_states()
     # rec_vs_energy()
     # energy_to_inf(3, print_graph=True)
     # min_size_energy_vs_rec()
     # random_walks()
     # pbc_zbc()
-    # time_execution_eigs()
+    time_execution_eigs()
+    # time_evolution_displacement()
