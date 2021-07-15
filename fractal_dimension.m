@@ -1,21 +1,36 @@
-thresholds = 0.01:0.05:3;
+% Precompute PSI_2 using Schrodinger2D.m
+disp('Running fractal dimension.m');
+max_value = max(max(PSI_2));
+thresholds = 0.02:0.02:(max_value);
+%thresholds = [max_value];
 [n_values, ~] = size(thresholds);
 dimensions = zeros(n_values, 1);
 index = 1;
 for x=thresholds
     area = PSI_2 > x;
     Mat = area(1:364, 1:364);
-    dim = b_fractal_dimension(Mat);
-    %disp(dim);
+    dim = b_fractal_dimension(Mat, false);
+    %disp(num2str(index));
     dimensions(index) = dim;
     index = 1 + index;
 end
 
 %figure;
-plot(thresholds, dimensions, 'x'); xlabel("Wavefunction threshold"); ylabel("Box-counting dimension");
+
+X = thresholds * 100 / max_value;
+p = polyfit(X, dimensions, 1);
+x_pred = [0 max(X)];
+y_pred = polyval(p, x_pred);
+
+disp(['Extrapolated dimension when threshold is 0: ' num2str(y_pred(1))]);
+
+plot(thresholds * 100 / max_value, dimensions, 'x', x_pred, y_pred); 
+xlabel("Wavefunction's threshold (% of max value)"); 
+ylabel("Box-counting dimension");
 title("Box-counting dimension of the wavefunction depending on a threshold");
-function dim = b_fractal_dimension(Mat)
-    verbose = false;
+
+
+function dim = b_fractal_dimension(Mat, verbose)
 
     data = box_counting_method(Mat);
     Y = log(data(:, 1));
@@ -27,7 +42,7 @@ function dim = b_fractal_dimension(Mat)
 
     if verbose
         disp(['Dimension: ' num2str(p(2))]);
-        plot(X, Y, 'x', x_pred, y_pred); xlabel("log(N)"); ylabel("log(s)"); title("Box-counting dimension of the fractal");
+        plot(X, Y, 'x', x_pred, y_pred); xlabel("log(s)"); ylabel("log(N)"); title("Box-counting dimension of the fractal");
     end
     
     dim = p(2);
